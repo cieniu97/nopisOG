@@ -1,6 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\YearController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\PanelController;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +30,53 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('panel/', [PanelController::class, 'index']);
+Route::post('panel/', [PanelController::class, 'store']);
+
+Route::get('panel/get-fields/{universityName}', [PanelController::class, 'getFields']);
+Route::get('panel/get-years/{universityName}/{fieldName}', [PanelController::class, 'getYears']);
+Route::get('panel/get-subjects/{universityName}/{fieldName}/{yearName}', [PanelController::class, 'getSubjects']);
+
+
+
+
+Route::resource('panel/users', UserController::class);
+
+
+Route::get('panel/universities/trashed', [UniversityController::class, 'trashed'])->name('universities.trashed');
+Route::post('panel/universities/restore/{id}', [UniversityController::class, 'restore'])->name('universities.restore');
+Route::resource('panel/universities', UniversityController::class);
+
+
+Route::get('panel/fields/trashed', [FieldController::class, 'trashed'])->name('fields.trashed');
+Route::post('panel/fields/restore/{id}', [FieldController::class, 'restore'])->name('fields.restore');
+Route::resource('panel/fields', FieldController::class);
+
+Route::get('panel/years/trashed', [YearController::class, 'trashed'])->name('years.trashed');
+Route::post('panel/years/restore/{id}', [YearController::class, 'restore'])->name('years.restore');
+Route::resource('panel/years', YearController::class);
+
+Route::get('panel/subjects/trashed', [SubjectController::class, 'trashed'])->name('subjects.trashed');
+Route::post('panel/subjects/restore/{id}', [SubjectController::class, 'restore'])->name('subjects.restore');
+Route::resource('panel/subjects', SubjectController::class);
+
+Route::get('panel/exams/trashed', [ExamController::class, 'trashed'])->name('exams.trashed');
+Route::post('panel/exams/restore/{id}', [ExamController::class, 'restore'])->name('exams.restore');
+Route::resource('panel/exams', ExamController::class);
+
+Route::get('panel/notes/trashed', [NoteController::class, 'trashed'])->name('notes.trashed');
+Route::post('panel/notes/restore/{id}', [NoteController::class, 'restore'])->name('notes.restore');
+Route::resource('panel/notes', NoteController::class);
+
+Route::resource('panel/subscriptions', SubscriptionController::class);
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+
+

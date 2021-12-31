@@ -2,85 +2,116 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSubjectRequest;
-use App\Http\Requests\UpdateSubjectRequest;
+use Illuminate\Http\Request;
 use App\Models\Subject;
+use App\Models\Year;
+
 
 class SubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all instances of a model paginated
     public function index()
     {
-        //
+        $subjects = Subject::paginate(20);
+        return view ('panel.subjects.index', ['subjects' => $subjects]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all trshed (soft deleted) instances of a model paginated
+    public function trashed()
+    {
+        $subjects = Subject::onlyTrashed()->paginate(20);
+        return view ('panel.subjects.trashed', ['subjects' => $subjects]);
+    }
+
+    // Display instance of a model creation form
     public function create()
     {
-        //
+        return view('panel.subjects.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSubjectRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreSubjectRequest $request)
+    // Validate data from creation form and store instance into database
+    public function store(Request $request)
     {
-        //
+        //Validating request from form
+        $validated = $request->validate([
+                'year_id' => 'required|numeric',
+                'name' => 'required|string',
+                'semester' => 'required|numeric|max:255',
+                'teacher' => 'required|string',
+        ]);
+
+        //Creating new classroom with validated request data
+        $subject = new Subject;
+        $subject->year_id = $validated['year_id'];
+        $subject->name = $validated['name'];
+        $subject->semester = $validated['semester'];
+        $subject->teacher = $validated['teacher'];
+
+        $subject->save();
+
+        return redirect('/panel/subjects/'.$subject->id)->with('success', 'Dodano!');
+            
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
+    // Display single instance of a model
     public function show(Subject $subject)
     {
-        //
+        $exams = $subject->exams()->paginate(20);
+        $notes = $subject->notes()->paginate(20);
+
+        return view('panel.subjects.show', ['subject' => $subject, 'exams' => $exams, 'notes' => $notes]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
+    // Display instance o a model update form
     public function edit(Subject $subject)
     {
-        //
+        return view('panel.subjects.edit', ['subject' => $subject]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateSubjectRequest  $request
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateSubjectRequest $request, Subject $subject)
+    // Validate data from creation form and update instance in database
+    public function update(Request $request, Subject $subject)
     {
-        //
+        //Validating request from form
+        $validated = $request->validate([
+            'year_id' => 'numeric',
+            'name' => 'string',
+            'semester' => 'numeric|max:255',
+            'teacher' => 'string',
+
+        ]);
+
+        //Changing data only if request had new data
+        if($request->has('year_id')){
+            $subject->year_id = $validated['year_id'];
+        }
+        if($request->has('name')){
+            $subject->name = $validated['name'];
+        }
+        if($request->has('semester')){
+            $subject->semester = $validated['semester'];
+        }
+        if($request->has('teacher')){
+            $subject->teacher = $validated['teacher'];
+        }
+        $subject->save();
+
+        return redirect('/panel/subjects/'.$subject->id)->with('success', 'Edycja pomyślna!');
+            
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Subject  $subject
-     * @return \Illuminate\Http\Response
-     */
+    // Soft delete instance of a model
     public function destroy(Subject $subject)
     {
-        //
+        $subject->delete();
+        return redirect('/panel/subjects')->with('success', 'Usunięto!');
+    }
+
+    // Restore trashed (soft deleted) instance of a model
+    public function restore($id)
+    {
+        
+        $subject = Subject::withTrashed()->where('id', $id)->firstOrFail();
+        $subject->restore();
+        return redirect('/panel/subjects/trashed')->with('success', 'Przywrócono!');
     }
 }

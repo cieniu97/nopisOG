@@ -20,6 +20,7 @@ class CreateSubjectsTable extends Migration
             $table->tinyInteger('semester')->nullable();
             $table->string('teacher');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

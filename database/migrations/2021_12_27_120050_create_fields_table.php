@@ -18,6 +18,7 @@ class CreateFieldsTable extends Migration
             $table->bigInteger('university_id')->unsigned();
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

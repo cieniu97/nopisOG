@@ -19,6 +19,7 @@ class CreateSubscriptionsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('checksum')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -22,12 +22,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(500)->create();
-        University::factory(5)->create();
-        Field::factory(50)->create();
-        Year::factory(50)->create();
-        Subject::factory(200)->create();
-        Note::factory(800)->create();
-        Exam::factory(400)->create();
+        University::factory(10)->create();
+        Field::factory(100)->create();
+        Year::factory(100)->create();
+        Subject::factory(400)->create();
+        Note::factory(1600)->create();
+        Exam::factory(800)->create();
 
         $users = User::all();
         $universities = University::all();

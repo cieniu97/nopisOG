@@ -2,85 +2,94 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUniversityRequest;
-use App\Http\Requests\UpdateUniversityRequest;
+use Illuminate\Http\Request;
 use App\Models\University;
+use App\Models\Field;
+
 
 class UniversityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all instances of a model paginated
     public function index()
     {
-        //
+        $universities = University::paginate(20);
+        return view ('panel.universities.index', ['universities' => $universities]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all trshed (soft deleted) instances of a model paginated
+    public function trashed()
+    {
+        $universities = University::onlyTrashed()->paginate(20);
+        return view ('panel.universities.trashed', ['universities' => $universities]);
+    }
+
+    // Display instance of a model creation form
     public function create()
     {
-        //
+        return view('panel.universities.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreUniversityRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUniversityRequest $request)
+    // Validate data from creation form and store instance into database
+    public function store(Request $request)
     {
-        //
+        //Validating request from form
+        $validated = $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        //Creating new classroom with validated request data
+        $university = new University;
+        $university->name = $validated['name'];
+        $university->save();
+
+        return redirect('/panel/universities/'.$university->id)->with('success', 'Dodano!');
+         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
-     */
+    // Display single instance of a model
     public function show(University $university)
     {
-        //
+        $fields = $university->fields()->paginate(20);
+        return view('panel.universities.show', ['university' => $university, 'fields' => $fields]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
-     */
+    // Display instance o a model update form
     public function edit(University $university)
     {
-        //
+        return view('panel.universities.edit', ['university' => $university]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateUniversityRequest  $request
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateUniversityRequest $request, University $university)
+    // Validate data from creation form and update instance in database
+    public function update(Request $request, University $university)
     {
-        //
+        //Validating request from form
+        $validated = $request->validate([
+            'name' => 'string',
+        ]);
+
+        //Changing data only if request had new data
+        if($request->has('name')){
+            $university->name = $validated['name'];
+        }
+        $university->save();
+
+        return redirect('/panel/universities/'.$university->id)->with('success', 'Edycja pomyślna!');
+         
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\University  $university
-     * @return \Illuminate\Http\Response
-     */
+    // Soft delete instance of a model
     public function destroy(University $university)
     {
-        //
+        $university->delete();
+        return redirect('/panel/universities')->with('success', 'Usunięto!');
+    }
+
+    // Restore trashed (soft deleted) instance of a model
+    public function restore($id)
+    {
+        
+        $university = University::withTrashed()->where('id', $id)->firstOrFail();
+        $university->restore();
+        return redirect('/panel/universities/trashed')->with('success', 'Przywrócono!');
     }
 }

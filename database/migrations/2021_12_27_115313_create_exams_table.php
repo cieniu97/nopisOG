@@ -20,6 +20,7 @@ class CreateExamsTable extends Migration
             $table->integer('date');
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

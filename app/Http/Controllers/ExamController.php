@@ -2,85 +2,139 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreExamRequest;
-use App\Http\Requests\UpdateExamRequest;
+use Illuminate\Http\Request;
 use App\Models\Exam;
 
 class ExamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all instances of a model paginated
     public function index()
     {
-        //
+        $exams = Exam::paginate(20);
+        return view ('panel.exams.index', ['exams' => $exams]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Display all trshed (soft deleted) instances of a model paginated
+    public function trashed()
+    {
+        $exams = Exam::onlyTrashed()->paginate(20);
+        return view ('panel.exams.trashed', ['exams' => $exams]);
+    }
+
+    // Display instance of a model creation form
     public function create()
     {
-        //
+        return view('panel.exams.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreExamRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreExamRequest $request)
+    // Validate data from creation form and store instance into database
+    public function store(Request $request)
     {
-        //
+        //Validating request from form
+        $validated = $request->validate([
+                'subject_id' => 'required|numeric',
+                'name' => 'required|string',
+                'date' => 'required|date',
+                'description' => 'required|string',
+        ]);
+
+        // Additional validation for time inputs
+        $date = $this->validateTime($validated['date']);
+        if($date==false)
+        {
+            return back()->withErrors(['start' => 'Invalid date in form field']);
+        }
+
+        //Creating new classroom with validated request data
+        $exam = new Exam;
+        $exam->subject_id = $validated['subject_id'];
+        $exam->name = $validated['name'];
+        $exam->date = $date;
+        $exam->description = $validated['description'];
+
+        $exam->save();
+
+        return redirect('/panel/exams/'.$exam->id)->with('success', 'Dodano!');
+            
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
+    // Display single instance of a model
     public function show(Exam $exam)
     {
-        //
+        $notes = $exam->notes()->paginate(20);
+        return view('panel.exams.show', ['exam' => $exam, 'notes' => $notes]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
+    // Display instance o a model update form
     public function edit(Exam $exam)
     {
-        //
+        return view('panel.exams.edit', ['exam' => $exam]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateExamRequest  $request
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateExamRequest $request, Exam $exam)
+    // Validate data from creation form and update instance in database
+    public function update(Request $request, Exam $exam)
     {
-        //
+        //Validating request from form
+        $validated = $request->validate([
+            'subject_id' => 'numeric',
+            'name' => 'string',
+            'date' => 'date',
+            'description' => 'string',
+
+        ]);
+
+        //Changing data only if request had new data
+        if($request->has('subject_id')){
+            $exam->subject_id = $validated['subject_id'];
+        }
+        if($request->has('name')){
+            $exam->name = $validated['name'];
+        }
+        if($request->has('date')){
+            // Additional validation for time inputs
+            $date = $this->validateTime($validated['date']);
+            if($date==false)
+            {
+                return back()->withErrors(['start' => 'Invalid date in form field']);
+            }
+            $exam->date = $date;
+        }
+        if($request->has('description')){
+            $exam->description = $validated['description'];
+        }
+        $exam->save();
+
+        return redirect('/panel/exams/'.$exam->id)->with('success', 'Edycja pomyślna!');
+            
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
+    // Soft delete instance of a model
     public function destroy(Exam $exam)
     {
-        //
+        $exam->delete();
+        return redirect('/panel/exams')->with('success', 'Usunięto!');
     }
+
+    // Restore trashed (soft deleted) instance of a model
+    public function restore($id)
+    {
+        
+        $exam = Exam::withTrashed()->where('id', $id)->firstOrFail();
+        $exam->restore();
+        return redirect('/panel/exams/trashed')->with('success', 'Przywrócono!');
+    }
+
+    // Converting datetime to timestamp so it can be converted back to local time on client side
+    public function validateTime($time)
+    {
+        // Making sure date is correct and converting it to timestamp
+        $output=@strtotime($time);
+
+        if($output==false){
+            return false;
+        }
+        return $output;
+
+    }
+
 }
