@@ -52,17 +52,7 @@
                 
                 
                 <li class="list-group-item"><b>Opis</b> <p>{{$note->description}}</p></li>
-                <li class="list-group-item"><b>Egzaminy</b>
-                    <ul>
-                        @forelse ($note->exams as $exam)
-                            <li><a href="{{route('exams.show', ['exam' => $exam->id])}}">{{$exam->name}}</a></li>
-                            @empty
-                            <li>
-                                Te materiały nie są jeszcze przypisane do żadnego egzaminu
-                            </li>
-                        @endforelse
-                    </ul>
-                </li>
+
                 <li class="list-group-item"><b>Pliki</b>
                     <ul>
                         <li><b><a class="text-warning" href="/files/download/note/{{$note->id}}">Pobierz wszystkie</a></b></li>

@@ -6,6 +6,8 @@
 @section('content')
   <div class="container text-white min-vh-100 mt-3">
     <div class="row">
+
+      {{-- Subscription list - Years and subjects --}}
       <div class="col-12 col-lg-3">
         @if (count($years)>0)
         <h3>Roczniki</h3>
@@ -24,7 +26,7 @@
 
         @if (count($subjects)>0)
           <h3>Subskrypcje dodatkowe</h3>
-          <ul class="list-group">
+          <ul class="list-group mb-3">
             @forelse ($subjects as $subject)
               <li class="list-group-item">
                 <a href="{{route('subjects.show', ['subject' => $subject->id])}}">{{$subject->name}}</a>
@@ -35,9 +37,25 @@
             @endforelse
           </ul>
         @endif
+
+        @if (count($recentNotes)>0)
+          <h3>Ostatnio dodane</h3>
+          <ul class="list-group">
+            @forelse ($recentNotes as $recentNote)
+              <li class="list-group-item">
+                <a href="{{route('notes.show', ['note' => $recentNote->id])}}">{{$recentNote->name}}</a>
+              </li>
+                
+            @empty
+
+            @endforelse
+          </ul>
+        @endif
         
         
       </div>
+
+
       <div class="col-12 col-lg-9">
         <h3>Egzaminy</h3>
 
@@ -48,63 +66,26 @@
                 <th scope="col">Data</th>
                 <th scope="col">Przedmiot</th>
                 <th scope="col">Egzamin</th>
-                <th scope="col">Notatki</th>
-                <th scope="col">Pobierz wszystkie</th>
-  
-  
               </tr>
             </thead>
             <tbody>
               @forelse ($allExams as $exam)
               <tr>
+                {{-- Date --}}
                 <th class="dateToFormat">{{$exam->date}}</th>
+               
+                {{-- Subject --}}
                 <td> 
                   <a href="{{route('subjects.show', ['subject' => $exam->subject->id])}}">{{$exam->subject->name}}</a>
                 </td>
+                
+                {{-- Exam --}}
                 <td>
-                  
-                  <a href="" data-bs-toggle="modal" data-bs-target="#exam{{$exam->id}}">
+                  <a href="{{route('exams.show', ['exam' => $exam->id])}}">
                     {{$exam->name}}
                   </a>
-                  
-                  <!-- Modal -->
-                  <div class="modal fade text-dark" id="exam{{$exam->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">{{$exam->name}} - Opis</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          {{$exam->description}}
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-                
                 </td>
-                <td>
-                  @if (count($exam->notes) != 0)
-                      <a href="{{route('examNotes', ['exam' => $exam->id])}}" class="btn btn-outline-primary btn-sm" style="display: inline">Wyświetl</a>
-                  @else
-                    Brak
-                  @endif
-                  
-                </td>
-                <td>
-                  @if (count($exam->notes) != 0)
-                    
-                  <form action="/download/exam/{{$exam->id}}" style="display: inline" method="post">
-                    @csrf   
-                    <input type="image" src="/layout/download.png" alt="" width="25px" style="cursor: pointer">
-                  </form>
-  
-                  @else
-                    Brak
-                  @endif
-                  
-                </td>
+
   
               </tr>
                 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Exam;
+use App\Models\File;
+
 
 
 class NoteController extends Controller
@@ -41,23 +43,8 @@ class NoteController extends Controller
                 'files.*' => ['mimes:jpeg,jpg,doc,docx,odt,pdf,txt','max:5000'],
         ]);
 
-        $full_path="";
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file ) {
-            
-            dd($file->getClientOriginalName());
-            $path=$file->store('public/files');
-            $path=$path.';';
-
-            $full_path=$full_path.$path;
-            
-
-            }
-            dd($full_path);
-        }
-        else{
-            dd('blad');
-        }
+        
+        
 
         //Creating new classroom with validated request data
         $note = new Note;
@@ -66,18 +53,18 @@ class NoteController extends Controller
         $note->description = $validated['description'];
         $note->save();
 
-        //If note is added through exam page it is auto-assigned to exam 
-        if($request->has('exam_id')){
-            if(is_numeric($request['exam_id'])){
-                $exam = Exam::where('id', $request['exam_id'])->get();
-                if(count($exam) >0){
-                    $note->exams()->attach($request['exam_id']);
-                }
+
+        // Adding files if they exist
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file ) {
+                $newFile = new File;
+                $newFile->note_id=$note->id;
+                $path=$file->store('public/files');
+                $newFile->name=$file->getClientOriginalName();
+                $newFile->path=$path;
+                $newFile->save();
             }
         }
-
-        
-
         return redirect('/panel/notes/'.$note->id)->with('success', 'Dodano!');
             
     }
@@ -142,7 +129,6 @@ class NoteController extends Controller
     // Restore trashed (soft deleted) instance of a model
     public function restore($id)
     {
-        
         $note = Note::withTrashed()->where('id', $id)->firstOrFail();
         $note->restore();
         return redirect('/panel/notes/trashed')->with('success', 'Przywrócono!');

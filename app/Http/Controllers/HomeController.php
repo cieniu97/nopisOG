@@ -20,13 +20,32 @@ class HomeController extends Controller
         if(Auth::check()){
             
             $allExams = $this->getAllActiveUserExams();
+            $recentNotes = $this->getRecentNotes();
+            
             $subjects = auth()->user()->subjects;
             $years = auth()->user()->years;
-            return view('home', ['subjects' => $subjects, 'years' => $years, 'allExams' => $allExams]);
+            return view('home', ['subjects' => $subjects, 'years' => $years, 'allExams' => $allExams, 'recentNotes' => $recentNotes]);
         }
         else{
             return view('intro');
         }
+
+    }
+
+    public function getRecentNotes(){
+        
+        $allNotes = collect();
+        $subjects = auth()->user()->subjects;
+        $years = auth()->user()->years;
+        foreach($years as $year){
+            $subjects = $subjects->merge($year->subjects);
+        }
+        foreach($subjects as $subject){
+            $allNotes = $allNotes->merge($subject->notes);
+        }
+        
+        return $allNotes->unique()->sortBy('created_at')->take(10);
+
 
     }
 
@@ -171,14 +190,6 @@ class HomeController extends Controller
         $subjects=$year->subjects->pluck('name');
         return $subjects;
     }
-
-    public function examNotes(Exam $exam){
-        
-        return view('examnotes', ['exam' => $exam]);
-        //return $exam->notes->first()->files;
-    }
-
-
 
 
 }

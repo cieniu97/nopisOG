@@ -8,7 +8,7 @@ use App\Http\Controllers\YearController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\NoteController;
-use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\HomeController;
 
@@ -33,7 +33,10 @@ Route::post('/', [HomeController::class, 'store'])->name('store');
 
 Route::post('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/create', [HomeController::class, 'create'])->name('create');
-Route::get('/exam/{exam}/notes', [HomeController::class, 'examNotes'])->name('examNotes');
+
+Route::get('/files/download/note/{note}', [FileController::class, 'downloadAllNoteFiles']);
+Route::get('/files/download/{file}', [FileController::class, 'downloadFile']);
+
 
 
 

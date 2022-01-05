@@ -61,8 +61,8 @@ class ExamController extends Controller
     // Display single instance of a model
     public function show(Exam $exam)
     {
-        $notes = $exam->notes()->paginate(20);
-        return view('panel.exams.show', ['exam' => $exam, 'notes' => $notes]);
+        
+        return view('panel.exams.show', ['exam' => $exam]);
     }
 
     // Display instance o a model update form

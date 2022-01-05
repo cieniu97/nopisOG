@@ -14,7 +14,4 @@ class Exam extends Model
     public function subject(){
         return $this->belongsTo(Subject::class);
     }
-    public function notes(){
-        return $this->belongsToMany(Note::Class, 'exam_note');
-    }
 }

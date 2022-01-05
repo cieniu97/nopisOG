@@ -4,8 +4,8 @@
 @endsection
 @section('content')
 
-<div class="container min-vh-100">
-    <div class="row">
+<div class="container min-vh-100 text-white">
+    <div class="row mb-3">
 
         {{-- Breadcrumbs + model informations --}}
         <div class="col-12 mt-5 d-flex  flex-row align-items-center mb-3 bg-light text-dark p-4">
@@ -69,16 +69,23 @@
 
     </div>
 
+    {{-- Notes --}}
+    <div class="row mb-5">
+        
+        {{-- Tittle --}}
+        <div class="col-12">
+            <h2 class="text-white border-bottom pb-3">Notatki</h2>
+        </div>
 
-    <div class="row mt-5 text-white">
-
-        {{-- Notes --}}
+        {{-- List --}}
         <div class="col-12 col-lg-6 mb-5 mb-lg-0">
-            <h2 class="text-white">Notatki</h2>
             <ul class="list-group mt-2">
                 @forelse ($notes as $note)
                     <li class="list-group-item">
                         <a href="{{route('notes.show', ['note' => $note->id])}}">{{$note->name}}</a>
+                        <a class="text-warning" href="/files/download/note/{{$note->id}}">
+                            <img src="/layout/download.png" alt="Pobierz" height="20px">
+                        </a>
                     </li>
                 @empty
                     <li class="list-group-item"> Ten kierunek nie posiada jeszcze notatek ani materiałów</li>
@@ -91,9 +98,47 @@
             
         </div>
 
-        {{-- Exams --}}
+        {{-- Create form --}}
+        <div class="col-12 col-lg-6">
+            <h5 class="border border-warning  p-2">Dodaj notatki / materiały</h5>
+            <form action="{{route('notes.store')}}" method="POST" enctype="multipart/form-data" class="px-4">
+                @csrf
+                <input class="form-control" type="text" name="subject_id" value="{{$subject->id}}" hidden readonly>
+                
+                <div class="form-group">
+                    <label for="name"> Nazwa </label>
+                    <input class="form-control" type="text" name="name" value="{{old('name')}}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description"> Opis </label>
+                    <textarea class="form-control" name="description" rows="3"> {{old('description')}} </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="formFileMultiple" class="form-label">Wybierz pliki</label>
+                    <input class="form-control" type="file" name="files[]" id="formFileMultiple" multiple>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-2"> Dodaj </button>
+                
+            </form>
+        </div>
+
+        
+    </div>
+
+    {{-- Exams --}}
+    <div class="row text-white">
+
+        {{-- Tittle --}}
+        <div class="col-12 ">
+            <h2 class="text-white border-bottom pb-3">Egzaminy</h2>
+        </div>
+
+        {{-- List --}}
         <div class="col-12 col-lg-6 mb-5 mb-lg-0">
-            <h2 class="text-white">Egzaminy</h2>
+            
             <ul class="list-group mt-2">
                 @forelse ($exams as $exam)
                     <li class="list-group-item @if($exam->date < time()) list-group-item-secondary  @endif">
@@ -107,10 +152,34 @@
                 @endforelse
                 
             </ul>
-            <div class="mt-2">
-                {{$notes->onEachSide(1)->links()}}
-            </div>
             
+            
+        </div>
+
+        {{-- Create form --}}
+        <div class="col-12 col-lg-6 mb-5 mb-lg-0">
+            <h5 class=" border border-warning  p-2">Dodaj egzamin</h5>
+            <form action="{{route('exams.store')}}" method="POST" class="px-4">
+                @csrf
+                
+                <input class="form-control" type="text" name="subject_id" value="{{$subject->id}}" hidden readonly>
+                
+                <div class="form-group">
+                    <label for="name"> Nazwa </label>
+                    <input class="form-control" type="text" name="name" value="{{old('name')}}">
+    
+                </div>
+                <div class="form-group">
+                    <label for="date"> Data </label>
+                    <input class="form-control" type="datetime-local" name="date" value="{{old('type')}}">
+                </div>
+                <div class="form-group">
+                    <label for="description"> Opis </label>
+                    <textarea class="form-control" name="description" rows="3"> {{old('type')}} </textarea>
+                </div>
+                <button type="submit" class="btn btn-success mt-2"> Dodaj </button>
+                
+            </form>
         </div>
 
         

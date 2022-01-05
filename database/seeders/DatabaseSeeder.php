@@ -27,9 +27,9 @@ class DatabaseSeeder extends Seeder
         Field::factory(4)->create();
         Year::factory(8)->create();
         Subject::factory(16)->create();
-        Note::factory(64)->create();
-        Exam::factory(32)->create();
-        File::factory(256)->create();
+        Note::factory(300)->create();
+        Exam::factory(320)->create();
+        File::factory(300)->create();
 
         
 
@@ -66,11 +66,6 @@ class DatabaseSeeder extends Seeder
 
         foreach($notes as $note){
             $note->subject_id=$subjects->random()->id;
-            
-            if(random_int(0,1)){
-               $note->exams()->attach($exams->random()->id);
-            }
-            
             $note->save();
         }
 

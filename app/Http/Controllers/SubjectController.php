@@ -58,8 +58,8 @@ class SubjectController extends Controller
     // Display single instance of a model
     public function show(Subject $subject)
     {
-        $exams = $subject->exams()->paginate(20)->sortByDesc('date');
-        $notes = $subject->notes()->paginate(20);
+        $exams = $subject->exams->sortByDesc('date');
+        $notes = $subject->notes()->paginate(10);
         
         if(count(auth()->user()->subjects->where('id', $subject->id)) > 0){
             $is_subscribed = true;
