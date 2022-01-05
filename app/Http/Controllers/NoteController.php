@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Models\Exam;
+
 
 class NoteController extends Controller
 {
@@ -30,29 +32,51 @@ class NoteController extends Controller
     // Validate data from creation form and store instance into database
     public function store(Request $request)
     {
+        //dd($request->all());
         //Validating request from form
         $validated = $request->validate([
                 'subject_id' => 'required|numeric',
                 'name' => 'required|string',
-                'date' => 'required|date',
                 'description' => 'required|string',
+                'files.*' => ['mimes:jpeg,jpg,doc,docx,odt,pdf,txt','max:5000'],
         ]);
 
-        // Additional validation for time inputs
-        $date = $this->validateTime($validated['date']);
-        if($date==false)
-        {
-            return back()->withErrors(['start' => 'Invalid date in form field']);
+        $full_path="";
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file ) {
+            
+            dd($file->getClientOriginalName());
+            $path=$file->store('public/files');
+            $path=$path.';';
+
+            $full_path=$full_path.$path;
+            
+
+            }
+            dd($full_path);
+        }
+        else{
+            dd('blad');
         }
 
         //Creating new classroom with validated request data
         $note = new Note;
         $note->subject_id = $validated['subject_id'];
         $note->name = $validated['name'];
-        $note->date = $date;
         $note->description = $validated['description'];
-
         $note->save();
+
+        //If note is added through exam page it is auto-assigned to exam 
+        if($request->has('exam_id')){
+            if(is_numeric($request['exam_id'])){
+                $exam = Exam::where('id', $request['exam_id'])->get();
+                if(count($exam) >0){
+                    $note->exams()->attach($request['exam_id']);
+                }
+            }
+        }
+
+        
 
         return redirect('/panel/notes/'.$note->id)->with('success', 'Dodano!');
             

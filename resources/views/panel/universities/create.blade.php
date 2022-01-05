@@ -18,7 +18,7 @@ Dodaj uniwersytet
             </div>
             <button type="submit" class="btn btn-success mt-2"> Dodaj </button>
             
-            </form>
+        </form>
             
             <div>
                 @if ($errors->any())

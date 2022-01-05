@@ -10,7 +10,8 @@ use \App\Models\Year;
 use \App\Models\Subject;
 use \App\Models\Note;
 use \App\Models\Exam;
-use \App\Models\Subscription;
+use \App\Models\File;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,13 +22,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(500)->create();
-        University::factory(10)->create();
-        Field::factory(100)->create();
-        Year::factory(100)->create();
-        Subject::factory(400)->create();
-        Note::factory(1600)->create();
-        Exam::factory(800)->create();
+        User::factory(100)->create();
+        University::factory(2)->create();
+        Field::factory(4)->create();
+        Year::factory(8)->create();
+        Subject::factory(16)->create();
+        Note::factory(64)->create();
+        Exam::factory(32)->create();
+        File::factory(256)->create();
+
+        
 
         $users = User::all();
         $universities = University::all();
@@ -36,6 +40,8 @@ class DatabaseSeeder extends Seeder
         $subjects = Subject::all();
         $notes = Note::all();
         $exams = Exam::all();
+        $files = File::all();
+
 
         foreach($fields as $field){
             $field->university_id=$universities->random()->id;
@@ -52,36 +58,35 @@ class DatabaseSeeder extends Seeder
             $subject->save();
         }
 
-        foreach($notes as $note){
-            $note->subject_id=$subjects->random()->id;
-            if(random_int(0,2)==0){
-                $note->exam_id = $exams->random()->id;
-            }
-            $note->save();
-        }
 
         foreach($exams as $exam){
             $exam->subject_id=$subjects->random()->id;
             $exam->save();
         }
 
-        foreach($users as $user){
-            $subscription = new Subscription;
-            $subscription->user_id = $user->id;
-            $subscription->subject_id = $subjects->random()->id;
-            //Adding checksum to avoid duplicates in subscriptions table
-            //Without the checksum if duplicates occur then deleting record doesnt detach the relation and needs to be deleted N times
-            $checksum = $subscription->user_id. "-" .$subscription->subject_id;
-            $anit_duplicates = Subscription::where('checksum', $checksum)->first();
+        foreach($notes as $note){
+            $note->subject_id=$subjects->random()->id;
             
-            if($anit_duplicates == null){
-                $subscription->checksum = $checksum;
-                $subscription->save();
-                
+            if(random_int(0,1)){
+               $note->exams()->attach($exams->random()->id);
             }
-            else{
-                echo "Duplicate avoided \n"; 
-            }
+            
+            $note->save();
         }
+
+        foreach($files as $file){
+            $file->note_id=$notes->random()->id;
+            $file->save();
+        }
+
+        foreach($users as $user){
+            //Subscribing to 
+            for($i=random_int(0,3); $i<5; $i++){
+                $user->subjects()->attach($subjects->random()->id);
+            }
+            $user->years()->attach($years->random()->id);
+        }
+
+
     }
 }

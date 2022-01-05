@@ -1,0 +1,155 @@
+a {
+  text-decoration: none;
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: "Sulphur Point", sans-serif;
+  background-color: #182231;
+}
+
+.intro {
+  min-height: 90vh;
+  padding-bottom: 50px;
+  background-image: url("/layout/pensil.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  padding-top: 5vh;
+  color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 750px) {
+  .intro {
+    font-size: 16px;
+  }
+}
+.intro h1 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.intro .opis-tekst {
+  color: white;
+  width: 40vw;
+}
+@media (max-width: 1400px) {
+  .intro .opis-tekst {
+    width: 80vw;
+  }
+}
+.intro .opis-tekst hr {
+  border: solid 3px #ff9770;
+}
+.intro .instrukcja {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  width: 40vw;
+}
+@media (max-width: 1400px) {
+  .intro .instrukcja {
+    width: 80vw;
+  }
+}
+.intro .instrukcja .obrazek {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.intro .instrukcja .obrazek-tekst {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 350px;
+  padding: 20px;
+  background-color: #182231;
+  text-align: center;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+@media (max-width: 580px) {
+  .intro .instrukcja .obrazek-tekst {
+    width: 65%;
+  }
+}
+.intro .instrukcja .obrazek-zdj {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 30px;
+  padding: 20px;
+  background-color: #ff9770;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+@media (max-width: 580px) {
+  .intro .instrukcja .obrazek-zdj {
+    width: 35%;
+  }
+}
+.intro .instrukcja .obrazek-zdj img {
+  height: 40px;
+}
+
+.footer {
+  margin-top: 50px;
+  background-color: #182231;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  padding-bottom: 2%;
+}
+@media (max-width: 700px) {
+  .footer {
+    flex-direction: column;
+  }
+}
+.footer .wrapix {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+@media (max-width: 700px) {
+  .footer .wrapix {
+    width: 90%;
+    padding: 5%;
+  }
+}
+.footer .foto {
+  border: solid 7px white;
+  border-radius: 2px;
+  width: 30%;
+  padding: 5%;
+  background-image: url("/nopis/storage/app/public/layout/student.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FF9770;
+  text-shadow: 2px 2px 10px black;
+  font-family: "Bangers", cursive;
+}
+@media (max-width: 700px) {
+  .footer .foto {
+    width: 90%;
+    border: none;
+  }
+}

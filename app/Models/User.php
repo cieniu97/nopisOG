@@ -12,11 +12,14 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+    public function subjects(){
+        return $this->belongsToMany(Subject::Class, 'user_subject');
+    }
+
+    public function years(){
+        return $this->belongsToMany(Year::Class, 'user_year');
+    }
+
     protected $fillable = [
         'name',
         'email',

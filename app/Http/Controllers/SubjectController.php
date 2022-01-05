@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Year;
+use App\Models\User;
+
 
 
 class SubjectController extends Controller
@@ -56,10 +58,17 @@ class SubjectController extends Controller
     // Display single instance of a model
     public function show(Subject $subject)
     {
-        $exams = $subject->exams()->paginate(20);
+        $exams = $subject->exams()->paginate(20)->sortByDesc('date');
         $notes = $subject->notes()->paginate(20);
-
-        return view('panel.subjects.show', ['subject' => $subject, 'exams' => $exams, 'notes' => $notes]);
+        
+        if(count(auth()->user()->subjects->where('id', $subject->id)) > 0){
+            $is_subscribed = true;
+        }
+        else{
+            $is_subscribed = false;
+        }
+        
+        return view('panel.subjects.show', ['subject' => $subject, 'exams' => $exams, 'notes' => $notes, 'is_subscribed' => $is_subscribed]);
     }
 
     // Display instance o a model update form
@@ -113,5 +122,18 @@ class SubjectController extends Controller
         $subject = Subject::withTrashed()->where('id', $id)->firstOrFail();
         $subject->restore();
         return redirect('/panel/subjects/trashed')->with('success', 'Przywrócono!');
+    }
+
+    //Subscribe user to a subject 
+    public function subscribe(Subject $subject){
+        $user = User::where('id', auth()->user()->id)->first();
+        if(count($user->subjects->where('id', $subject->id)) > 0){
+            $user->subjects()->detach($subject->id);
+        }
+        else{
+            $user->subjects()->attach($subject->id);
+        }
+        
+        return back();
     }
 }

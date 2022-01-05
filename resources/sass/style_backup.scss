@@ -1,0 +1,878 @@
+@import 'minixs';
+@import 'variables';
+@mixin flexy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+a{
+  text-decoration: none;
+}
+body,
+html {
+    padding: 0;
+    margin: 0;
+    font-family: 'Sulphur Point', sans-serif;
+    min-height: 100vh;
+    background-color: $dark;
+}
+
+.container-fluid {
+    overflow: hidden;
+}
+
+.intro-wrap {
+    display: flex;
+    align-items: top;
+    flex-direction: row;
+}
+
+.min-menu {
+    height: 10vh;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10vw;
+    padding-right: 5vw;
+    @include rwd(560) {
+        flex-direction: column;
+        min-height: 150px;
+        padding-left: 0;
+        padding-right: 0;
+    };
+
+    .logo {
+        font-family: 'Reenie Beanie', cursive;
+        color: white;
+        @include flexy();
+        flex-direction: row;
+        font-size: 55px;
+        @include rwd(560) {
+            font-size: 30px;
+        };
+
+        img {
+            height: 55px;
+            @include rwd(400) {
+                height: 30px;
+            };
+        }
+
+        .logo-text {
+            font-size: 40px;
+            color: $gray;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+        margin-left: 15px;
+
+        &:hover {
+            color: $orange;
+        }
+    }
+
+    .min-menu-przyciski {
+        @include rwd(560) {
+            margin-top: 15px;
+        };
+    }
+
+    .min-menu-register {
+        background-color: $blue;
+        color: white;
+        padding: 15px;
+        border-radius: 12px;
+    }
+    .min-menu-auth{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      a, .nick{
+        margin-left:10px;
+        margin-right: 10px;
+      }
+      .nick{
+        color: white;
+        @include rwd(560){
+          display: none;
+        }
+      }
+    }
+}
+
+
+.portal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    color: white;
+    font-family: 'Amiri', serif;
+    font-size: 40px;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    text-shadow: 2px 2px 20px rgb(69, 69, 69);
+    color: $orange;
+    margin: auto;
+    @include rwd(750) {
+        font-size: 25px;
+    };
+}
+
+.opis {
+    min-height: 90vh;
+    padding-bottom: 50px;
+    background-image: url("/layout/pensil.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-top: 5vh;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    @include rwd(750) {
+        font-size: 16px;
+    };
+
+    h1 {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .opis-tekst {
+        color: white;
+        width: 40vw;
+        @include rwd(1400) {
+            width: 80vw;
+        };
+
+        hr {
+            border: solid 3px $orange;
+        }
+    }
+
+    .instrukcja {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        width: 40vw;
+        @include rwd(1400) {
+            width: 80vw;
+        };
+
+        .obrazek {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .obrazek-tekst {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+            width: 350px;
+            padding: 20px;
+            background-color: $dark;
+            text-align: center;
+            border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+            @include rwd(580) {
+                width: 65%;
+            };
+        }
+
+        .obrazek-zdj {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 30px;
+            padding: 20px;
+            background-color: $orange;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            @include rwd(580) {
+                width: 35%;
+            };
+
+            img {
+                height: 40px;
+            }
+        }
+    }
+}
+
+.photo {
+    @include flexy();
+
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 35vw;
+        min-height: 50vh;
+        background-color: rgba(#464646, 0.95);
+        padding: 1vw;
+        -webkit-box-shadow: 0 10px 23px -3px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0 10px 23px -3px rgba(0,0,0,0.75);
+        box-shadow: 0 10px 23px -3px rgba(0,0,0,0.75);
+        border-radius: 7px;
+        color: $gray;
+        @include rwd(1200) {
+            width: 50vw;
+            padding: 5%;
+            margin: 5%;
+        }
+        @include rwd(800) {
+            width: 70vw;
+        }
+        @include rwd(400) {
+            width: 80vw;
+        }
+
+        input {
+            width: 100%;
+            padding: 4%;
+            margin: 3%;
+            height: 2rem;
+            border: solid 2px white;
+            border-radius: 7px;
+
+        }
+        /* Reset Select */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            outline: 0;
+            box-shadow: none;
+            border: 0 !important;
+            background: #ffffff;
+            background-image: none;
+        }
+        /* Remove IE arrow */
+        select::-ms-expand {
+            display: none;
+        }
+        /* Custom Select */
+        .select {
+            position: relative;
+            display: flex;
+            flex-shrink: 0;
+            width: 100%;
+            height: 5rem;
+            margin: 3%;
+            line-height: 5rem;
+            background: #ffffff;
+            overflow: hidden;
+            border-radius: 7px;
+
+            @include rwd(1200) {
+                height: 3rem;
+                line-height: 3rem;
+            }
+        }
+
+        select {
+            flex: 1;
+            padding: 0 0.5em;
+            cursor: pointer;
+        }
+        /* Arrow */
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            background: rgb(86, 131, 181);
+            color: white;
+            cursor: pointer;
+            pointer-events: none;
+            -webkit-transition: 0.25s all ease;
+            -o-transition: 0.25s all ease;
+            transition: 0.25s all ease;
+        }
+        /* Transition */
+        .select:hover::after {
+            color: $redish;
+        }
+
+        .opcja {
+            width: 50%;
+            padding: 4%;
+            margin: 5%;
+        }
+
+        .zarejestruj {
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn {
+            background-color: $blueish;
+            width: 50%;
+            border: none;
+            color: white;
+            padding: 2%;
+            border-radius: 7px;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            color: $greenish;
+            background-color: white;
+            -webkit-transition: 0.5s all ease;
+            -o-transition: 0.5s all ease;
+            transition: 0.5s all ease;
+        }
+
+        .remember-wrap {
+            padding: 2%;
+            width: 100%;
+            @include flexy();
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            @include rwd(800) {
+                flex-direction: column;
+            }
+
+            input {
+                width: auto;
+                padding: 0;
+                margin: 0;
+                height: auto;
+            }
+
+            a {
+                color: rgb(235, 99, 99);
+                text-decoration: none;
+
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+
+        a {
+            font-size: 1.3rem;
+            padding: 4%;
+            color: white;
+            text-decoration: none;
+            @include rwd(1200) {
+                font-size: 1rem;
+            }
+
+            &:hover {
+                color: rgb(230, 137, 106);
+            }
+        }
+    }
+}
+
+.alert-wrap {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.53);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .alert {
+        background-color: white;
+        border-radius: 7px;
+        padding: 2%;
+    }
+
+    a {
+        color: $redish;
+        text-decoration: none;
+    }
+}
+
+.footer {
+  margin-top: 50px;
+    background-color: $dark;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    padding-bottom: 2%;
+    @include rwd(700) {
+        flex-direction: column;
+    }
+
+    .wrapix {
+        width: 70%;
+        @include rwd(700) {
+            width: 90%;
+            padding: 5%;
+        }
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+
+        
+    }
+
+    .foto {
+        border: solid 7px white;
+        border-radius: 2px;
+        width: 30%;
+        @include rwd(700) {
+            width: 90%;
+            border: none;
+        }
+        padding: 5%;
+        background-image: url("/nopis/storage/app/public/layout/student.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $redish;
+        text-shadow: 2px 2px 10px black;
+        font-family: 'Bangers', cursive;
+    }
+}
+
+#rodoTarget {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.59);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: rgb(69, 69, 69);
+}
+.rodoInside{
+  background-color:white;
+   padding:25px;
+    width:80vw;
+
+    overflow-y: scroll;
+    @include rwd(600){
+      height: 100%;
+    };
+}
+
+
+.egzaminy-zdj, .notes-zdj{
+
+  color: white;
+  min-height: 50vh;
+  background-image: url('/layout/student.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+  padding: 5vh 10vw 5vh 10vw;
+  margin-bottom: 50px;
+
+
+
+  .dodaj, .pokaz{
+    display: block;
+    margin-top: 15px;
+    width: 200px;
+    text-align: center;
+    background-color: $orange;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 20px;
+    &:hover {
+
+      cursor: pointer;
+    }
+  }
+  .egzaminy-wrap{
+    min-height: 30vh;
+    background-color: $dark;
+    padding: 25px;
+    border-radius: 12px;
+    width: 35vw;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include rwd(750){
+      border-radius: 0;
+
+    }
+  }
+  .egzamin{
+    margin-top: 20px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+
+
+  }
+  .egzamin-nazwa{
+      border-top-left-radius: 5px;
+      border-bottom-left-radius:5px;
+    background-color: $orange;
+    color:white;
+    width: 70%;
+    padding: 15px;
+  }
+  .egzamin-data{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: white;
+    color:$gray;
+    width: 30%;
+    padding: 15px;
+  }
+  .egzamin-download{
+    width: 30%;
+    padding: 15px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: $blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    form{
+      width: 100%;
+
+    }
+    button{
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: $blue;
+    }
+  }
+  .egzamin-przyciski{
+    text-align:center;
+    a{
+        text-decoration: none;
+    }
+
+    h1{
+      font-size: 45px;
+      text-shadow: 2px 2px 10px black;
+    }
+
+  }
+  .notes-small{
+    display: none;
+  }
+
+  @include rwd(1300){
+    .egzaminy-wrap{
+      width: 50vw;
+    }
+  }
+  @include rwd(900){
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5vh 2vw 0 2vw;
+    
+
+    .egzaminy-wrap{
+      width: 100%;
+      margin-top: 100px;
+      background-color: rgba(#182230, 0.76);
+    }
+    .egzamin-przyciski{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .dodaj, .pokaz{
+      margin-top: 0;
+      width: auto;
+      padding: 10px;
+      font-size: 18px;
+      margin-left: 15px;
+    }
+    .notes-small{
+      display: flex;
+    }
+    .notes-big{
+      display: none;
+    }
+  }
+  @include rwd(430){
+    .egzaminy-wrap{
+      .egzamin{
+        flex-direction: column;
+        .egzamin-nazwa, .egzamin-data, .egzamin-download{
+          width: 100%;
+          border-radius: 0;
+
+        }
+      }
+    }
+
+
+
+  }
+}
+
+.notes-zdj{
+  background-image: url('/layout/blank.jpg');
+}
+.lista-head{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+  h1{
+    display: inline;
+  }
+  .dodaj{
+    text-align: center;
+    background-color: $orange;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 20%;
+  }
+
+  @include rwd(750){
+    flex-direction: column;
+    .dodaj{
+      width: 50%;
+    }
+  }
+}
+
+.lista-row{
+  width: 70%;
+  margin: auto;
+}
+.add-forms{
+  background-image: url('/layout/man.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  form{
+    width: 40vw;
+    background-color: rgba(#182230, 0.96);
+    padding: 65px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color:white;
+    font-size: 17px;
+    -webkit-box-shadow: 10px 10px 45px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 45px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 45px 0px rgba(0,0,0,0.75);
+
+    .input-wrap{
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+      label{
+        font-weight: bold;
+      }
+      input,select{
+        color: black;
+        padding: 7px;
+      }
+
+
+    }
+    .pliki{
+      background-color: $orange;
+      margin-bottom: 15px;
+      padding: 7px;
+    }
+    button{
+      width:30%;
+      background-color: $blue;
+      border: none;
+      padding: 7px;
+      &:hover {
+        cursor:pointer;
+      }
+    }
+    textarea{
+      color: black;
+      padding: 7px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    @include rwd(1300){
+      width: 60vw;
+    }
+    @include rwd(7500){
+      width: 80vw;
+    }
+    @include rwd(560){
+      width: 100vw;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
+
+.form-wrap{
+  background-color: $dark;
+}
+
+
+.wyszukiwanie-form{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  color:white;
+  .input-wrap{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 20%;
+    label{
+      font-weight: bold;
+    }
+    input,select{
+      color: black;
+      padding: 7px;
+    }
+
+
+  }
+  button{
+    width:20%;
+    background-color: $blue;
+    border: none;
+    padding: 7px;
+    &:hover {
+      cursor:pointer;
+    }
+  }
+
+  @include rwd(720){
+    flex-direction: column;
+    align-items: center;
+    .input-wrap{
+      width: 80%;
+    }
+
+    button{
+      width: 50%;
+      margin-top: 15px;
+    }
+  }
+  @include rwd(560){
+
+    .input-wrap{
+      width: 100%;
+    }
+    button{
+      width: 80%;
+    }
+  }
+}
+
+.komurka-wrap{
+  background-color: rgb(221, 221, 221);
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 30px;
+  padding-left: 40px;
+
+
+
+  .komurka{
+    width: 15%;
+
+  }
+  .tabela-opis{
+    font-weight: bold;
+    font-size: 20px;
+
+  }
+  button{
+
+    background-color: $blue;
+    border: none;
+    padding: 7px;
+    color: white;
+    &:hover {
+      cursor:pointer;
+    }
+  }
+
+  @include rwd(750){
+    flex-direction: column;
+    align-items: baseline;
+    .komurka{
+      padding: 10px;
+      width: 100%;
+    }
+  };
+}
+
+.komurka-opis-wrap{
+  background-color: $dark;
+  color: white;
+  @include rwd(750){
+    display: none;
+  };
+}
+
+.nie-ma{
+  text-align: center;
+  background-color:white;
+   padding:20px;
+   color: $dark;
+}
+.nie-ma-home{
+  background-color: $orange;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 10px;
+}

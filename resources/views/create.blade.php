@@ -1,4 +1,4 @@
-@extends('layouts.panel')
+@extends('layouts.master')
 @section('title')
 Panel zarządzania
 @endsection
@@ -6,30 +6,15 @@ Panel zarządzania
 @section('content')
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
 </script>
+<div class="container">
+    
 <div class="row">
-    {{-- Table of contents --}}
-    <div class="col-12 col-md-4 bg-light p-2">
-        <h2 class="mt-2 p-3 bg-dark text-white rounded">Zarządzanie danymi</h2>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="{{route('users.index')}}">Użytkownicy</a></li>
-            <li class="list-group-item"><a href="{{route('universities.index')}}">Uniwersytety</a></li>
-            <li class="list-group-item"><a href="{{route('fields.index')}}">Kierunki</a></li>
-            <li class="list-group-item"><a href="{{route('years.index')}}">Roczniki</a></li>
-            <li class="list-group-item"><a href="{{route('subjects.index')}}">Przedmioty</a></li>
-            <li class="list-group-item"><a href="{{route('exams.index')}}">Egzaminy</a></li>
-            <li class="list-group-item"><a href="{{route('notes.index')}}">Notatki</a></li>
-            <li class="list-group-item"><a href="{{route('subscriptions.index')}}">Subskrybcje</a></li>
-
-        </ul>
-    </div>
+    
 
     {{-- Create form --}}
-    <div class="col-12 col-md-8">
-        
-        
+    <div class="col ">
 
-        
-        <form class="row bg-light p-3" id="ultra-add-form" action="/panel" method="POST" autocomplete="off" onsubmit="validateUltraAddForm(event)">
+        <form class="row bg-light p-3" id="ultra-add-form" action="/" method="POST" autocomplete="off" onsubmit="validateUltraAddForm(event)">
             @csrf
             <div class="bg-dark text-white p-4 rounded mb-3">
                 <h2>Dodaj cokolwiek</h2>
@@ -52,7 +37,6 @@ Panel zarządzania
                     Dodano
                     @foreach (Session::get('added') as $item)
                             {{$item->name}} -> 
-                        
                     @endforeach
                 </div> 
                 
@@ -145,6 +129,7 @@ Panel zarządzania
             
         </form>
     </div>
+</div>
 </div>
 
 

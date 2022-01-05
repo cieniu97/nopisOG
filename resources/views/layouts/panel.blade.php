@@ -34,6 +34,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {{-- Panel --}}
+                    <li class="nav-item ">
+                        <a class="nav-link {{ (request()->is('panel')) ? 'active' : '' }}" aria-current="page" href="{{route('panel')}}">Panel</a>
+                      </li>
                     {{-- Users --}}
                     <li class="nav-item ">
                       <a class="nav-link {{ (request()->is('panel/users*')) ? 'active' : '' }}" aria-current="page" href="{{route('users.index')}}">Użytkownicy</a>

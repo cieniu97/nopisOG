@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Year;
 use App\Models\Field;
+use App\Models\User;
+
 
 
 class YearController extends Controller
@@ -55,7 +57,13 @@ class YearController extends Controller
     public function show(Year $year)
     {
         $subjects = $year->subjects()->paginate(20);
-        return view('panel.years.show', ['year' => $year, 'subjects' => $subjects]);
+        if(count(auth()->user()->years->where('id', $year->id)) > 0){
+            $is_subscribed = true;
+        }
+        else{
+            $is_subscribed = false;
+        }
+        return view('panel.years.show', ['year' => $year, 'subjects' => $subjects, 'is_subscribed' => $is_subscribed]);
     }
 
     // Display instance o a model update form
@@ -105,5 +113,20 @@ class YearController extends Controller
         $year = Year::withTrashed()->where('id', $id)->firstOrFail();
         $year->restore();
         return redirect('/panel/years/trashed')->with('success', 'Przywrócono!');
+    }
+
+    //Subscribe user to a year 
+    public function subscribe(Year $year){
+        $user = User::where('id', auth()->user()->id)->first();
+        if(count($user->years->where('id', $year->id)) > 0){
+            
+            $user->years()->detach($year->id);
+        }
+        else{
+
+            $user->years()->attach($year->id);
+        }
+        
+        return back();
     }
 }

@@ -20,4 +20,7 @@ class Subject extends Model
     public function year(){
         return $this->belongsTo(Year::class);
     }
+    public function users(){
+        return $this->belongsToMany(User::Class, 'user_subject');
+    }
 }

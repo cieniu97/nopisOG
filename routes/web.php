@@ -10,6 +10,8 @@ use App\Http\Controllers\ExamController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\PanelController;
+use App\Http\Controllers\HomeController;
+
 
 
 
@@ -26,11 +28,16 @@ use App\Http\Controllers\PanelController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/', [HomeController::class, 'store'])->name('store');
 
-Route::get('panel/', [PanelController::class, 'index']);
+Route::post('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/create', [HomeController::class, 'create'])->name('create');
+Route::get('/exam/{exam}/notes', [HomeController::class, 'examNotes'])->name('examNotes');
+
+
+
+Route::get('panel/', [PanelController::class, 'index'])->name('panel');
 Route::post('panel/', [PanelController::class, 'store']);
 
 Route::get('panel/get-fields/{universityName}', [PanelController::class, 'getFields']);
@@ -52,10 +59,12 @@ Route::get('panel/fields/trashed', [FieldController::class, 'trashed'])->name('f
 Route::post('panel/fields/restore/{id}', [FieldController::class, 'restore'])->name('fields.restore');
 Route::resource('panel/fields', FieldController::class);
 
+Route::post('years/subscribe/{year}', [YearController::class, 'subscribe'])->name('years.subscribe');
 Route::get('panel/years/trashed', [YearController::class, 'trashed'])->name('years.trashed');
 Route::post('panel/years/restore/{id}', [YearController::class, 'restore'])->name('years.restore');
 Route::resource('panel/years', YearController::class);
 
+Route::post('subjects/subscribe/{subject}', [SubjectController::class, 'subscribe'])->name('subjects.subscribe');
 Route::get('panel/subjects/trashed', [SubjectController::class, 'trashed'])->name('subjects.trashed');
 Route::post('panel/subjects/restore/{id}', [SubjectController::class, 'restore'])->name('subjects.restore');
 Route::resource('panel/subjects', SubjectController::class);
