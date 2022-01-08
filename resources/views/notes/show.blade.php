@@ -10,7 +10,7 @@
         <div class="col-12 col-md-6 mt-5 ">
             
             <h2 class="text-white" >{{$note->name}}</h2>
-            @if (auth()->user()->is_admin)
+            @if (auth()->user()->is_admin || auth()->user()->id == $note->user_id)
             <div class="mt-2">
                 <a href="{{route('notes.edit', ['note' => $note->id])}}" class="btn btn-warning d-inline">Edytuj</a>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete">

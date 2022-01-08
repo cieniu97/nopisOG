@@ -17,6 +17,9 @@ class FieldController extends Controller
    // Display all trshed (soft deleted) instances of a model paginated
    public function trashed()
    {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
        $fields = Field::onlyTrashed()->paginate(20);
        return view ('fields.trashed', ['fields' => $fields]);
    }
@@ -24,12 +27,18 @@ class FieldController extends Controller
    // Display instance of a model creation form
    public function create()
    {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
        return view('fields.create');
    }
 
    // Validate data from creation form and store instance into database
    public function store(Request $request)
    {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
        //Validating request from form
        $validated = $request->validate([
             'university_id' => 'required|numeric',
@@ -56,12 +65,18 @@ class FieldController extends Controller
    // Display instance o a model update form
    public function edit(Field $field)
    {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
        return view('fields.edit', ['field' => $field]);
    }
 
    // Validate data from creation form and update instance in database
    public function update(Request $request, Field $field)
    {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
        //Validating request from form
         $validated = $request->validate([
             'university_id' => 'numeric',
@@ -84,6 +99,9 @@ class FieldController extends Controller
    // Soft delete instance of a model
    public function destroy(Field $field)
    {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         if(count($field->years) > 0){
             return back()->with('message', 'Do tego kierunku przypisane są jeszcze roczniki. Należy najpierw usunąć powiązane dane.');
         }
@@ -94,7 +112,9 @@ class FieldController extends Controller
    // Restore trashed (soft deleted) instance of a model
    public function restore($id)
    {
-       
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
        $field = Field::withTrashed()->where('id', $id)->firstOrFail();
        if($field->university == null){
         return back()->with('message', 'Nie można przywrócić tego przedmiotu, ponieważ związany z nim rocznik został usunięty lub nie istnieje');

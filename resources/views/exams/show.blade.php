@@ -10,7 +10,7 @@
             {{-- Model information --}}
             <div >
                 <h2 class="text-white">{{$exam->name}}</h2>
-                @if (auth()->user()->is_admin)
+                @if (auth()->user()->is_admin || auth()->user()->id == $exam->user_id)
                     <div class="mt-2">
                         <a href="{{route('exams.edit', ['exam' => $exam->id])}}" class="btn btn-warning d-inline">Edytuj</a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete">

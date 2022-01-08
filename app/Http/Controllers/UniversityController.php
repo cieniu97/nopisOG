@@ -19,6 +19,9 @@ class UniversityController extends Controller
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         $universities = University::onlyTrashed()->paginate(20);
         return view ('universities.trashed', ['universities' => $universities]);
     }
@@ -26,12 +29,18 @@ class UniversityController extends Controller
     // Display instance of a model creation form
     public function create()
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         return view('universities.create');
     }
 
     // Validate data from creation form and store instance into database
     public function store(Request $request)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         //Validating request from form
         $validated = $request->validate([
             'name' => 'required|string',
@@ -56,12 +65,18 @@ class UniversityController extends Controller
     // Display instance o a model update form
     public function edit(University $university)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         return view('universities.edit', ['university' => $university]);
     }
 
     // Validate data from creation form and update instance in database
     public function update(Request $request, University $university)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         //Validating request from form
         $validated = $request->validate([
             'name' => 'string',
@@ -80,6 +95,9 @@ class UniversityController extends Controller
     // Soft delete instance of a model
     public function destroy(University $university)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         if(count($university->fields) > 0){
             return back()->with('message', 'Do tego uniwersytetu przypisane są jeszcze kierunki. Należy najpierw usunąć powiązane dane.');
         }
@@ -90,7 +108,9 @@ class UniversityController extends Controller
     // Restore trashed (soft deleted) instance of a model
     public function restore($id)
     {
-        
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         $university = University::withTrashed()->where('id', $id)->firstOrFail();
         $university->restore();
         return redirect('/universities/trashed')->with('message', 'Przywrócono!');

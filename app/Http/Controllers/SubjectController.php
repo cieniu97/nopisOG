@@ -21,6 +21,9 @@ class SubjectController extends Controller
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         $subjects = Subject::onlyTrashed()->paginate(20);
         return view ('subjects.trashed', ['subjects' => $subjects]);
     }
@@ -28,12 +31,18 @@ class SubjectController extends Controller
     // Display instance of a model creation form
     public function create()
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         return view('subjects.create');
     }
 
     // Validate data from creation form and store instance into database
     public function store(Request $request)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         //Validating request from form
         $validated = $request->validate([
                 'year_id' => 'required|numeric',
@@ -74,12 +83,18 @@ class SubjectController extends Controller
     // Display instance o a model update form
     public function edit(Subject $subject)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         return view('subjects.edit', ['subject' => $subject]);
     }
 
     // Validate data from creation form and update instance in database
     public function update(Request $request, Subject $subject)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         //Validating request from form
         $validated = $request->validate([
             'year_id' => 'numeric',
@@ -111,6 +126,9 @@ class SubjectController extends Controller
     // Soft delete instance of a model
     public function destroy(Subject $subject)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         if((count($subject->notes) > 0) || (count($subject->exams) > 0)){
             return back()->with('message', 'Do tego przedmiotu przypisane są jeszcze egzaminy lub notatki. Należy najpierw usunąć powiązane dane.');
         }
@@ -121,7 +139,9 @@ class SubjectController extends Controller
     // Restore trashed (soft deleted) instance of a model
     public function restore($id)
     {
-        
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         $subject = Subject::withTrashed()->where('id', $id)->firstOrFail();
         
         if($subject->year == null){

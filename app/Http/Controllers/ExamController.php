@@ -69,51 +69,67 @@ class ExamController extends Controller
     // Display instance o a model update form
     public function edit(Exam $exam)
     {
-        return view('exams.edit', ['exam' => $exam]);
+        if(($exam->user_id == auth()->user()->id) || (auth()->user()->is_admin)){
+            return view('exams.edit', ['exam' => $exam]);
+        }
+        return back()->with('message', 'Nie posiadasz uprawnień!');
+        
     }
 
     // Validate data from creation form and update instance in database
     public function update(Request $request, Exam $exam)
     {
-        //Validating request from form
-        $validated = $request->validate([
-            'subject_id' => 'numeric',
-            'name' => 'string',
-            'date' => 'date',
-            'description' => 'string',
+        if(($exam->user_id == auth()->user()->id) || (auth()->user()->is_admin)){
+            //Validating request from form
+            $validated = $request->validate([
+                'subject_id' => 'numeric',
+                'name' => 'string',
+                'date' => 'date',
+                'description' => 'string',
 
-        ]);
+            ]);
 
-        //Changing data only if request had new data
-        if($request->has('subject_id')){
-            $exam->subject_id = $validated['subject_id'];
-        }
-        if($request->has('name')){
-            $exam->name = $validated['name'];
-        }
-        if($request->has('date')){
-            // Additional validation for time inputs
-            $date = $this->validateTime($validated['date']);
-            if($date==false)
-            {
-                return back()->withErrors(['start' => 'Invalid date in form field']);
+            //Changing data only if request had new data
+            if($request->has('subject_id')){
+                $exam->subject_id = $validated['subject_id'];
             }
-            $exam->date = $date;
-        }
-        if($request->has('description')){
-            $exam->description = $validated['description'];
-        }
-        $exam->save();
+            if($request->has('name')){
+                $exam->name = $validated['name'];
+            }
+            if($request->has('date')){
+                // Additional validation for time inputs
+                $date = $this->validateTime($validated['date']);
+                if($date==false)
+                {
+                    return back()->withErrors(['start' => 'Invalid date in form field']);
+                }
+                $exam->date = $date;
+            }
+            if($request->has('description')){
+                $exam->description = $validated['description'];
+            }
+            $exam->save();
 
-        return redirect('/exams/'.$exam->id)->with('message', 'Edycja pomyślna!');
+            return redirect('/exams/'.$exam->id)->with('message', 'Edycja pomyślna!');
+        }
+        else{
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
+        
             
     }
 
     // Soft delete instance of a model
     public function destroy(Exam $exam)
     {
-        $exam->delete();
-        return redirect('/')->with('message', 'Usunięto!');
+        if(($exam->user_id == auth()->user()->id) || (auth()->user()->is_admin)){
+            $exam->delete();
+            return redirect('/')->with('message', 'Usunięto!');
+        }
+        else{
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
+        
     }
 
 

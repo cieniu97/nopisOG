@@ -21,6 +21,9 @@ class YearController extends Controller
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         $years = Year::onlyTrashed()->paginate(20);
         return view ('years.trashed', ['years' => $years]);
     }
@@ -28,12 +31,18 @@ class YearController extends Controller
     // Display instance of a model creation form
     public function create()
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         return view('years.create');
     }
 
     // Validate data from creation form and store instance into database
     public function store(Request $request)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         //Validating request from form
         $validated = $request->validate([
                 'field_id' => 'required|numeric',
@@ -69,12 +78,18 @@ class YearController extends Controller
     // Display instance o a model update form
     public function edit(Year $year)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         return view('years.edit', ['year' => $year]);
     }
 
     // Validate data from creation form and update instance in database
     public function update(Request $request, Year $year)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         //Validating request from form
             $validated = $request->validate([
                 'field_id' => 'numeric',
@@ -102,6 +117,9 @@ class YearController extends Controller
     // Soft delete instance of a model
     public function destroy(Year $year)
     {
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         if(count($year->subjects) > 0){
             return back()->with('message', 'Do tego rocznika przypisane są jeszcze przedmioty. Należy najpierw usunąć powiązane dane.');
         }
@@ -112,7 +130,9 @@ class YearController extends Controller
     // Restore trashed (soft deleted) instance of a model
     public function restore($id)
     {
-        
+        if(!auth()->user()->is_admin){
+            return back()->with('message', 'Nie posiadasz uprawnień!');
+        }
         $year = Year::withTrashed()->where('id', $id)->firstOrFail();
         if($year->field == null){
             return back()->with('message', 'Nie można przywrócić tego przedmiotu, ponieważ związany z nim rocznik został usunięty lub nie istnieje');
