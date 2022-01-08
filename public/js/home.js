@@ -22,7 +22,7 @@ window.onload = function onStart() {
     }
 
     // Hiding success message onclick or onhoover
-    var success = document.getElementById('success-message');
+    var success = document.getElementById('errors-message');
     if(success != null){
         success.addEventListener("mouseout", hideMessage);
         success.addEventListener("click", hideMessage);
@@ -80,7 +80,7 @@ function universityConfirmed(){
         document.getElementById('field-done').classList.remove("disabled");
 
         //Requesting data from database via AJAX and puting them into according datalist
-        var url = 'panel/get-fields/' + document.getElementById('university-input').value;
+        var url = '/get-fields/' + document.getElementById('university-input').value;
         getData(url, 'field-list');
     }
     else{
@@ -109,7 +109,7 @@ function fieldConfirmed(){
         document.getElementById('year-done').classList.remove("disabled");
 
         //Requesting data from database via AJAX and puting them into according datalist
-        var url = 'panel/get-years/' + document.getElementById('university-input').value + '/' + document.getElementById('field-input').value;
+        var url = '/get-years/' + document.getElementById('university-input').value + '/' + document.getElementById('field-input').value;
         getData(url, 'year-list');
     }
     else{
@@ -139,7 +139,7 @@ function yearConfirmed(){
         document.getElementById('teacher-input').disabled = false;
 
         //Requesting data from database via AJAX and puting them into according datalist
-        var url = 'panel/get-subjects/' + document.getElementById('university-input').value + '/' + document.getElementById('field-input').value + '/' + document.getElementById('year-input').value;
+        var url = '/get-subjects/' + document.getElementById('university-input').value + '/' + document.getElementById('field-input').value + '/' + document.getElementById('year-input').value;
         getData(url, 'subject-list');
         }
         else{

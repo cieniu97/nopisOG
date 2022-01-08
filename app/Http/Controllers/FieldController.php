@@ -11,20 +11,20 @@ class FieldController extends Controller
    public function index()
    {
        $fields = Field::paginate(20);
-       return view ('panel.fields.index', ['fields' => $fields]);
+       return view ('fields.index', ['fields' => $fields]);
    }
 
    // Display all trshed (soft deleted) instances of a model paginated
    public function trashed()
    {
        $fields = Field::onlyTrashed()->paginate(20);
-       return view ('panel.fields.trashed', ['fields' => $fields]);
+       return view ('fields.trashed', ['fields' => $fields]);
    }
 
    // Display instance of a model creation form
    public function create()
    {
-       return view('panel.fields.create');
+       return view('fields.create');
    }
 
    // Validate data from creation form and store instance into database
@@ -42,7 +42,7 @@ class FieldController extends Controller
        $field->name = $validated['name'];
        $field->save();
 
-       return redirect('/panel/fields/'.$field->id)->with('success', 'Dodano!');
+       return redirect('/fields/'.$field->id)->with('success', 'Dodano!');
         
    }
 
@@ -50,13 +50,13 @@ class FieldController extends Controller
    public function show(Field $field)
    {
         $years = $field->years()->paginate(20);
-        return view('panel.fields.show', ['field' => $field, 'years' => $years]);
+        return view('fields.show', ['field' => $field, 'years' => $years]);
    }
 
    // Display instance o a model update form
    public function edit(Field $field)
    {
-       return view('panel.fields.edit', ['field' => $field]);
+       return view('fields.edit', ['field' => $field]);
    }
 
    // Validate data from creation form and update instance in database
@@ -77,7 +77,7 @@ class FieldController extends Controller
         }
        $field->save();
 
-       return redirect('/panel/fields/'.$field->id)->with('success', 'Edycja pomyślna!');
+       return redirect('/fields/'.$field->id)->with('success', 'Edycja pomyślna!');
         
    }
 
@@ -85,7 +85,7 @@ class FieldController extends Controller
    public function destroy(Field $field)
    {
        $field->delete();
-       return redirect('/panel/fields')->with('success', 'Usunięto!');
+       return redirect('/fields')->with('success', 'Usunięto!');
    }
 
    // Restore trashed (soft deleted) instance of a model
@@ -94,7 +94,7 @@ class FieldController extends Controller
        
        $field = Field::withTrashed()->where('id', $id)->firstOrFail();
        $field->restore();
-       return redirect('/panel/fields/trashed')->with('success', 'Przywrócono!');
+       return redirect('/fields/trashed')->with('success', 'Przywrócono!');
    }
 
 

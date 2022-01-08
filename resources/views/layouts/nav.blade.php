@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark ">
+<nav class="navbar navbar-expand-md navbar-dark mb-5 ">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="/layout/logo.png" alt="Nopis.pl" width="120" class="img-fluid">
@@ -18,13 +18,13 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    
+
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         {{auth()->user()->name}}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="userDropdown">
-                        
+
                         <form action="/logout" method="post">
 
                             <li>
@@ -34,25 +34,57 @@
                         </form>
 
 
-                        <li>
-                            @if (auth()->user()->is_admin)
-                            {{-- Panel --}}
-
-                            <a class="dropdown-item {{ (request()->is('panel')) ? 'active' : '' }}" aria-current="page"
-                                href="{{route('panel')}}">Panel</a>
-
-                            @endif
-                        </li>
+                       
 
 
                     </ul>
                 </li>
+
+
+                @if (auth()->user()->is_admin)
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="contentMenu" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Przeglądaj
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="contentMenu">
+
+                        {{-- Univeristies --}}
+                        <li>
+                            <a class="dropdown-item" href="{{route('universities.index')}}">Uniwersytety</a>
+                        </li>
+                        
+
+                        {{-- Fields --}}
+                        <li>
+                            <a class="dropdown-item" href="{{route('fields.index')}}">Kierunki</a>
+                        </li>
+
+                        {{-- Years --}}
+                        <li>
+                            <a class="dropdown-item" href="{{route('years.index')}}">Roczniki</a>
+                        </li>
+
+                        {{-- Subjects --}}
+                        <li>
+                            <a class="dropdown-item" href="{{route('subjects.index')}}">Przedmioty</a>
+                        </li>
+                        
+                        
+
+
+                    </ul>
+                </li>
+
+                @endif
 
                 <li class="nav-item">
                     <a href="{{route('create')}}" class="nav-link btn btn-outline-warning">
                         Dodaj cokolwiek
                     </a>
                 </li>
+
+
 
 
             </ul>

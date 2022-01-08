@@ -11,20 +11,20 @@ class ExamController extends Controller
     public function index()
     {
         $exams = Exam::paginate(20);
-        return view ('panel.exams.index', ['exams' => $exams]);
+        return view ('exams.index', ['exams' => $exams]);
     }
 
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
         $exams = Exam::onlyTrashed()->paginate(20);
-        return view ('panel.exams.trashed', ['exams' => $exams]);
+        return view ('exams.trashed', ['exams' => $exams]);
     }
 
     // Display instance of a model creation form
     public function create()
     {
-        return view('panel.exams.create');
+        return view('exams.create');
     }
 
     // Validate data from creation form and store instance into database
@@ -54,7 +54,7 @@ class ExamController extends Controller
 
         $exam->save();
 
-        return redirect('/panel/exams/'.$exam->id)->with('success', 'Dodano!');
+        return redirect('/exams/'.$exam->id)->with('success', 'Dodano!');
             
     }
 
@@ -62,13 +62,13 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         
-        return view('panel.exams.show', ['exam' => $exam]);
+        return view('exams.show', ['exam' => $exam]);
     }
 
     // Display instance o a model update form
     public function edit(Exam $exam)
     {
-        return view('panel.exams.edit', ['exam' => $exam]);
+        return view('exams.edit', ['exam' => $exam]);
     }
 
     // Validate data from creation form and update instance in database
@@ -104,7 +104,7 @@ class ExamController extends Controller
         }
         $exam->save();
 
-        return redirect('/panel/exams/'.$exam->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/exams/'.$exam->id)->with('success', 'Edycja pomyślna!');
             
     }
 
@@ -112,17 +112,9 @@ class ExamController extends Controller
     public function destroy(Exam $exam)
     {
         $exam->delete();
-        return redirect('/panel/exams')->with('success', 'Usunięto!');
+        return redirect('/exams')->with('success', 'Usunięto!');
     }
 
-    // Restore trashed (soft deleted) instance of a model
-    public function restore($id)
-    {
-        
-        $exam = Exam::withTrashed()->where('id', $id)->firstOrFail();
-        $exam->restore();
-        return redirect('/panel/exams/trashed')->with('success', 'Przywrócono!');
-    }
 
     // Converting datetime to timestamp so it can be converted back to local time on client side
     public function validateTime($time)

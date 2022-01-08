@@ -43,7 +43,7 @@
           <ul class="list-group">
             @forelse ($recentNotes as $recentNote)
               <li class="list-group-item">
-                <a href="{{route('notes.show', ['note' => $recentNote->id])}}">{{$recentNote->name}}</a>
+                <a href="{{route('notes.show', ['note' => $recentNote->id])}}">{{$recentNote->name}} - {{$recentNote->subject->name}}</a>
               </li>
                 
             @empty

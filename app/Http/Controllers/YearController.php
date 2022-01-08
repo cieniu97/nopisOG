@@ -15,20 +15,20 @@ class YearController extends Controller
     public function index()
     {
         $years = Year::paginate(20);
-        return view ('panel.years.index', ['years' => $years]);
+        return view ('years.index', ['years' => $years]);
     }
 
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
         $years = Year::onlyTrashed()->paginate(20);
-        return view ('panel.years.trashed', ['years' => $years]);
+        return view ('years.trashed', ['years' => $years]);
     }
 
     // Display instance of a model creation form
     public function create()
     {
-        return view('panel.years.create');
+        return view('years.create');
     }
 
     // Validate data from creation form and store instance into database
@@ -49,7 +49,7 @@ class YearController extends Controller
         $year->type = $validated['type'];
         $year->save();
 
-        return redirect('/panel/years/'.$year->id)->with('success', 'Dodano!');
+        return redirect('/years/'.$year->id)->with('success', 'Dodano!');
             
     }
 
@@ -63,13 +63,13 @@ class YearController extends Controller
         else{
             $is_subscribed = false;
         }
-        return view('panel.years.show', ['year' => $year, 'subjects' => $subjects, 'is_subscribed' => $is_subscribed]);
+        return view('years.show', ['year' => $year, 'subjects' => $subjects, 'is_subscribed' => $is_subscribed]);
     }
 
     // Display instance o a model update form
     public function edit(Year $year)
     {
-        return view('panel.years.edit', ['year' => $year]);
+        return view('years.edit', ['year' => $year]);
     }
 
     // Validate data from creation form and update instance in database
@@ -95,7 +95,7 @@ class YearController extends Controller
             }
         $year->save();
 
-        return redirect('/panel/years/'.$year->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/years/'.$year->id)->with('success', 'Edycja pomyślna!');
             
     }
 
@@ -103,7 +103,7 @@ class YearController extends Controller
     public function destroy(Year $year)
     {
         $year->delete();
-        return redirect('/panel/years')->with('success', 'Usunięto!');
+        return redirect('/years')->with('success', 'Usunięto!');
     }
 
     // Restore trashed (soft deleted) instance of a model
@@ -112,7 +112,7 @@ class YearController extends Controller
         
         $year = Year::withTrashed()->where('id', $id)->firstOrFail();
         $year->restore();
-        return redirect('/panel/years/trashed')->with('success', 'Przywrócono!');
+        return redirect('/years/trashed')->with('success', 'Przywrócono!');
     }
 
     //Subscribe user to a year 

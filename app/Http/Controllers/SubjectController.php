@@ -15,20 +15,20 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::paginate(20);
-        return view ('panel.subjects.index', ['subjects' => $subjects]);
+        return view ('subjects.index', ['subjects' => $subjects]);
     }
 
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
         $subjects = Subject::onlyTrashed()->paginate(20);
-        return view ('panel.subjects.trashed', ['subjects' => $subjects]);
+        return view ('subjects.trashed', ['subjects' => $subjects]);
     }
 
     // Display instance of a model creation form
     public function create()
     {
-        return view('panel.subjects.create');
+        return view('subjects.create');
     }
 
     // Validate data from creation form and store instance into database
@@ -51,7 +51,7 @@ class SubjectController extends Controller
 
         $subject->save();
 
-        return redirect('/panel/subjects/'.$subject->id)->with('success', 'Dodano!');
+        return redirect('/subjects/'.$subject->id)->with('success', 'Dodano!');
             
     }
 
@@ -68,13 +68,13 @@ class SubjectController extends Controller
             $is_subscribed = false;
         }
         
-        return view('panel.subjects.show', ['subject' => $subject, 'exams' => $exams, 'notes' => $notes, 'is_subscribed' => $is_subscribed]);
+        return view('subjects.show', ['subject' => $subject, 'exams' => $exams, 'notes' => $notes, 'is_subscribed' => $is_subscribed]);
     }
 
     // Display instance o a model update form
     public function edit(Subject $subject)
     {
-        return view('panel.subjects.edit', ['subject' => $subject]);
+        return view('subjects.edit', ['subject' => $subject]);
     }
 
     // Validate data from creation form and update instance in database
@@ -104,7 +104,7 @@ class SubjectController extends Controller
         }
         $subject->save();
 
-        return redirect('/panel/subjects/'.$subject->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/subjects/'.$subject->id)->with('success', 'Edycja pomyślna!');
             
     }
 
@@ -112,7 +112,7 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         $subject->delete();
-        return redirect('/panel/subjects')->with('success', 'Usunięto!');
+        return redirect('/subjects')->with('success', 'Usunięto!');
     }
 
     // Restore trashed (soft deleted) instance of a model
@@ -121,7 +121,7 @@ class SubjectController extends Controller
         
         $subject = Subject::withTrashed()->where('id', $id)->firstOrFail();
         $subject->restore();
-        return redirect('/panel/subjects/trashed')->with('success', 'Przywrócono!');
+        return redirect('/subjects/trashed')->with('success', 'Przywrócono!');
     }
 
     //Subscribe user to a subject 

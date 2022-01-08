@@ -22,7 +22,7 @@ window.onload = function onStart() {
     }
 
     // Hiding success message onclick or onhoover
-    var success = document.getElementById('success-message');
+    var success = document.getElementById('errors-message');
     if(success != null){
         success.addEventListener("mouseout", hideMessage);
         success.addEventListener("click", hideMessage);

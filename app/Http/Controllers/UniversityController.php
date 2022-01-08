@@ -13,20 +13,20 @@ class UniversityController extends Controller
     public function index()
     {
         $universities = University::paginate(20);
-        return view ('panel.universities.index', ['universities' => $universities]);
+        return view ('universities.index', ['universities' => $universities]);
     }
 
     // Display all trshed (soft deleted) instances of a model paginated
     public function trashed()
     {
         $universities = University::onlyTrashed()->paginate(20);
-        return view ('panel.universities.trashed', ['universities' => $universities]);
+        return view ('universities.trashed', ['universities' => $universities]);
     }
 
     // Display instance of a model creation form
     public function create()
     {
-        return view('panel.universities.create');
+        return view('universities.create');
     }
 
     // Validate data from creation form and store instance into database
@@ -42,7 +42,7 @@ class UniversityController extends Controller
         $university->name = $validated['name'];
         $university->save();
 
-        return redirect('/panel/universities/'.$university->id)->with('success', 'Dodano!');
+        return redirect('/universities/'.$university->id)->with('success', 'Dodano!');
          
     }
 
@@ -50,13 +50,13 @@ class UniversityController extends Controller
     public function show(University $university)
     {
         $fields = $university->fields()->paginate(20);
-        return view('panel.universities.show', ['university' => $university, 'fields' => $fields]);
+        return view('universities.show', ['university' => $university, 'fields' => $fields]);
     }
 
     // Display instance o a model update form
     public function edit(University $university)
     {
-        return view('panel.universities.edit', ['university' => $university]);
+        return view('universities.edit', ['university' => $university]);
     }
 
     // Validate data from creation form and update instance in database
@@ -73,7 +73,7 @@ class UniversityController extends Controller
         }
         $university->save();
 
-        return redirect('/panel/universities/'.$university->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/universities/'.$university->id)->with('success', 'Edycja pomyślna!');
          
     }
 
@@ -81,7 +81,7 @@ class UniversityController extends Controller
     public function destroy(University $university)
     {
         $university->delete();
-        return redirect('/panel/universities')->with('success', 'Usunięto!');
+        return redirect('/universities')->with('success', 'Usunięto!');
     }
 
     // Restore trashed (soft deleted) instance of a model
@@ -90,6 +90,6 @@ class UniversityController extends Controller
         
         $university = University::withTrashed()->where('id', $id)->firstOrFail();
         $university->restore();
-        return redirect('/panel/universities/trashed')->with('success', 'Przywrócono!');
+        return redirect('/universities/trashed')->with('success', 'Przywrócono!');
     }
 }
