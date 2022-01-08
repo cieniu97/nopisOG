@@ -102,6 +102,9 @@ class YearController extends Controller
     // Soft delete instance of a model
     public function destroy(Year $year)
     {
+        if(count($year->subjects) > 0){
+            return back()->with('message', 'Do tego rocznika przypisane są jeszcze przedmioty. Należy najpierw usunąć powiązane dane.');
+        }
         $year->delete();
         return redirect('/years')->with('message', 'Usunięto!');
     }

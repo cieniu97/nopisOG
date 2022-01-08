@@ -84,6 +84,9 @@ class FieldController extends Controller
    // Soft delete instance of a model
    public function destroy(Field $field)
    {
+        if(count($field->years) > 0){
+            return back()->with('message', 'Do tego kierunku przypisane są jeszcze roczniki. Należy najpierw usunąć powiązane dane.');
+        }
        $field->delete();
        return redirect('/fields')->with('message', 'Usunięto!');
    }

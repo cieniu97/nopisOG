@@ -111,6 +111,9 @@ class SubjectController extends Controller
     // Soft delete instance of a model
     public function destroy(Subject $subject)
     {
+        if((count($subject->notes) > 0) || (count($subject->exams) > 0)){
+            return back()->with('message', 'Do tego przedmiotu przypisane są jeszcze egzaminy lub notatki. Należy najpierw usunąć powiązane dane.');
+        }
         $subject->delete();
         return redirect('/subjects')->with('message', 'Usunięto!');
     }

@@ -80,6 +80,9 @@ class UniversityController extends Controller
     // Soft delete instance of a model
     public function destroy(University $university)
     {
+        if(count($university->fields) > 0){
+            return back()->with('message', 'Do tego uniwersytetu przypisane są jeszcze kierunki. Należy najpierw usunąć powiązane dane.');
+        }
         $university->delete();
         return redirect('/universities')->with('message', 'Usunięto!');
     }
