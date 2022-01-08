@@ -3,8 +3,8 @@
 Edytuj egzamin
 @endsection
 @section('content')
-<div class="container min-vh-100 text-white">
-    <div class="col-12">
+<div class="container min-vh-100 ">
+    <div class="col-12 text-white">
         <h1>
             Edytuj egzamin
         </h1>

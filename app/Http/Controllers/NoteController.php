@@ -12,24 +12,24 @@ use App\Models\File;
 class NoteController extends Controller
 {
     // Display all instances of a model paginated
-    public function index()
-    {
-        $notes = Note::paginate(20);
-        return view ('notes.index', ['notes' => $notes]);
-    }
+    // public function index()
+    // {
+    //     $notes = Note::paginate(20);
+    //     return view ('notes.index', ['notes' => $notes]);
+    // }
 
     // Display all trshed (soft deleted) instances of a model paginated
-    public function trashed()
-    {
-        $notes = Note::onlyTrashed()->paginate(20);
-        return view ('notes.trashed', ['notes' => $notes]);
-    }
+    // public function trashed()
+    // {
+    //     $notes = Note::onlyTrashed()->paginate(20);
+    //     return view ('notes.trashed', ['notes' => $notes]);
+    // }
 
     // Display instance of a model creation form
-    public function create()
-    {
-        return view('notes.create');
-    }
+    // public function create()
+    // {
+    //     return view('notes.create');
+    // }
 
     // Validate data from creation form and store instance into database
     public function store(Request $request)
@@ -65,7 +65,7 @@ class NoteController extends Controller
                 $newFile->save();
             }
         }
-        return redirect('/notes/'.$note->id)->with('success', 'Dodano!');
+        return redirect('/notes/'.$note->id)->with('message', 'Dodano!');
             
     }
 
@@ -115,7 +115,7 @@ class NoteController extends Controller
         }
         $note->save();
 
-        return redirect('/notes/'.$note->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/notes/'.$note->id)->with('message', 'Edycja pomyślna!');
             
     }
 
@@ -123,15 +123,15 @@ class NoteController extends Controller
     public function destroy(Note $note)
     {
         $note->delete();
-        return redirect('/notes')->with('success', 'Usunięto!');
+        return redirect('/notes')->with('message', 'Usunięto!');
     }
 
-    // Restore trashed (soft deleted) instance of a model
-    public function restore($id)
-    {
-        $note = Note::withTrashed()->where('id', $id)->firstOrFail();
-        $note->restore();
-        return redirect('/notes/trashed')->with('success', 'Przywrócono!');
-    }
+    // // Restore trashed (soft deleted) instance of a model
+    // public function restore($id)
+    // {
+    //     $note = Note::withTrashed()->where('id', $id)->firstOrFail();
+    //     $note->restore();
+    //     return redirect('/notes/trashed')->with('success', 'Przywrócono!');
+    // }
 
 }

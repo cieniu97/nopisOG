@@ -49,7 +49,7 @@ class YearController extends Controller
         $year->type = $validated['type'];
         $year->save();
 
-        return redirect('/years/'.$year->id)->with('success', 'Dodano!');
+        return redirect('/years/'.$year->id)->with('message', 'Dodano!');
             
     }
 
@@ -95,7 +95,7 @@ class YearController extends Controller
             }
         $year->save();
 
-        return redirect('/years/'.$year->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/years/'.$year->id)->with('message', 'Edycja pomyślna!');
             
     }
 
@@ -103,7 +103,7 @@ class YearController extends Controller
     public function destroy(Year $year)
     {
         $year->delete();
-        return redirect('/years')->with('success', 'Usunięto!');
+        return redirect('/years')->with('message', 'Usunięto!');
     }
 
     // Restore trashed (soft deleted) instance of a model
@@ -112,7 +112,7 @@ class YearController extends Controller
         
         $year = Year::withTrashed()->where('id', $id)->firstOrFail();
         $year->restore();
-        return redirect('/years/trashed')->with('success', 'Przywrócono!');
+        return redirect('/years')->with('message', 'Przywrócono!');
     }
 
     //Subscribe user to a year 

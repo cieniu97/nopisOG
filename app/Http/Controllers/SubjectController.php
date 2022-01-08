@@ -51,7 +51,7 @@ class SubjectController extends Controller
 
         $subject->save();
 
-        return redirect('/subjects/'.$subject->id)->with('success', 'Dodano!');
+        return redirect('/subjects/'.$subject->id)->with('message', 'Dodano!');
             
     }
 
@@ -104,7 +104,7 @@ class SubjectController extends Controller
         }
         $subject->save();
 
-        return redirect('/subjects/'.$subject->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/subjects/'.$subject->id)->with('message', 'Edycja pomyślna!');
             
     }
 
@@ -112,7 +112,7 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         $subject->delete();
-        return redirect('/subjects')->with('success', 'Usunięto!');
+        return redirect('/subjects')->with('message', 'Usunięto!');
     }
 
     // Restore trashed (soft deleted) instance of a model
@@ -121,7 +121,7 @@ class SubjectController extends Controller
         
         $subject = Subject::withTrashed()->where('id', $id)->firstOrFail();
         $subject->restore();
-        return redirect('/subjects/trashed')->with('success', 'Przywrócono!');
+        return redirect('/subjects')->with('message', 'Przywrócono!');
     }
 
     //Subscribe user to a subject 

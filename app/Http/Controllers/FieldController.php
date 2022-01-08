@@ -42,7 +42,7 @@ class FieldController extends Controller
        $field->name = $validated['name'];
        $field->save();
 
-       return redirect('/fields/'.$field->id)->with('success', 'Dodano!');
+       return redirect('/fields/'.$field->id)->with('message', 'Dodano!');
         
    }
 
@@ -77,7 +77,7 @@ class FieldController extends Controller
         }
        $field->save();
 
-       return redirect('/fields/'.$field->id)->with('success', 'Edycja pomyślna!');
+       return redirect('/fields/'.$field->id)->with('message', 'Edycja pomyślna!');
         
    }
 
@@ -85,7 +85,7 @@ class FieldController extends Controller
    public function destroy(Field $field)
    {
        $field->delete();
-       return redirect('/fields')->with('success', 'Usunięto!');
+       return redirect('/fields')->with('message', 'Usunięto!');
    }
 
    // Restore trashed (soft deleted) instance of a model
@@ -94,7 +94,7 @@ class FieldController extends Controller
        
        $field = Field::withTrashed()->where('id', $id)->firstOrFail();
        $field->restore();
-       return redirect('/fields/trashed')->with('success', 'Przywrócono!');
+       return redirect('/fields/trashed')->with('message', 'Przywrócono!');
    }
 
 

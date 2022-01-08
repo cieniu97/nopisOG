@@ -167,7 +167,7 @@ class HomeController extends Controller
             }
         }
 
-        return back()->with(['added' => $result]);
+        return back()->with(['message' => 'Dodano!', 'added' => $result]);
     }
 
     public function getFields($universityName){

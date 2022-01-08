@@ -42,7 +42,7 @@ class UniversityController extends Controller
         $university->name = $validated['name'];
         $university->save();
 
-        return redirect('/universities/'.$university->id)->with('success', 'Dodano!');
+        return redirect('/universities/'.$university->id)->with('message', 'Dodano!');
          
     }
 
@@ -81,7 +81,7 @@ class UniversityController extends Controller
     public function destroy(University $university)
     {
         $university->delete();
-        return redirect('/universities')->with('success', 'Usunięto!');
+        return redirect('/universities')->with('message', 'Usunięto!');
     }
 
     // Restore trashed (soft deleted) instance of a model
@@ -90,6 +90,6 @@ class UniversityController extends Controller
         
         $university = University::withTrashed()->where('id', $id)->firstOrFail();
         $university->restore();
-        return redirect('/universities/trashed')->with('success', 'Przywrócono!');
+        return redirect('/universities/trashed')->with('message', 'Przywrócono!');
     }
 }

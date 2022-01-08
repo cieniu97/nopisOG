@@ -99,7 +99,7 @@
         </div>
 
         {{-- Create form --}}
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-6 text-white">
             <h5 class="border border-warning  p-2">Dodaj notatki / materiały</h5>
             <form action="{{route('notes.store')}}" method="POST" enctype="multipart/form-data" class="px-4">
                 @csrf
@@ -157,7 +157,7 @@
         </div>
 
         {{-- Create form --}}
-        <div class="col-12 col-lg-6 mb-5 mb-lg-0">
+        <div class="col-12 col-lg-6 mb-5 mb-lg-0 text-white">
             <h5 class=" border border-warning  p-2">Dodaj egzamin</h5>
             <form action="{{route('exams.store')}}" method="POST" class="px-4">
                 @csrf

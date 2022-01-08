@@ -4,12 +4,12 @@
 @endsection
 
 @section('content')
-<div class="container min-vh-100 text-white">
+<div class="container min-vh-100 ">
     <div class="row mt-5">
         <div class="col-12 ">
             {{-- Model information --}}
-            <div class="">
-                <h2 >{{$exam->name}}</h2>
+            <div >
+                <h2 class="text-white">{{$exam->name}}</h2>
                 @if (auth()->user()->is_admin)
                     <div class="mt-2">
                         <a href="{{route('exams.edit', ['exam' => $exam->id])}}" class="btn btn-warning d-inline">Edytuj</a>

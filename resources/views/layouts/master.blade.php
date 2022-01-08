@@ -25,23 +25,21 @@
     @include('layouts.footer')
 
     @if (session('message') || $errors->any())
-    <div id="errors-message" style="position:fixed; bottom:20px; left:20px; cursor: pointer;" class="bg-secondary text-white p-3">
-      <ul>
-      
-        {{-- Display message if there is one --}}
-        @if (session('message'))
-        <li>
-            {{session('message')}}
-        </li>
-        @endif
+    <div id="errors-message" style="position:fixed; bottom:20px; left:20px; cursor: pointer;" class="bg-dark text-white p-3 border">
+      {{-- Display message if there is one --}}
+      @if (session('message'))
+        {{session('message')}}
+      @endif
 
-        {{-- Display errors if any --}}
-        @if ($errors->any())   
-          @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-          @endforeach
-        @endif
+      {{-- Display errors if any --}}
+      @if ($errors->any())
+      <ul> 
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
       </ul>
+      @endif
+      
 
     </div>
 

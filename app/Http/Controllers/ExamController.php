@@ -7,25 +7,25 @@ use App\Models\Exam;
 
 class ExamController extends Controller
 {
-    // Display all instances of a model paginated
-    public function index()
-    {
-        $exams = Exam::paginate(20);
-        return view ('exams.index', ['exams' => $exams]);
-    }
+    // // Display all instances of a model paginated
+    // public function index()
+    // {
+    //     $exams = Exam::paginate(20);
+    //     return view ('exams.index', ['exams' => $exams]);
+    // }
 
-    // Display all trshed (soft deleted) instances of a model paginated
-    public function trashed()
-    {
-        $exams = Exam::onlyTrashed()->paginate(20);
-        return view ('exams.trashed', ['exams' => $exams]);
-    }
+    // // Display all trshed (soft deleted) instances of a model paginated
+    // public function trashed()
+    // {
+    //     $exams = Exam::onlyTrashed()->paginate(20);
+    //     return view ('exams.trashed', ['exams' => $exams]);
+    // }
 
-    // Display instance of a model creation form
-    public function create()
-    {
-        return view('exams.create');
-    }
+    // // Display instance of a model creation form
+    // public function create()
+    // {
+    //     return view('exams.create');
+    // }
 
     // Validate data from creation form and store instance into database
     public function store(Request $request)
@@ -54,7 +54,7 @@ class ExamController extends Controller
 
         $exam->save();
 
-        return redirect('/exams/'.$exam->id)->with('success', 'Dodano!');
+        return redirect('/exams/'.$exam->id)->with('message', 'Dodano!');
             
     }
 
@@ -104,7 +104,7 @@ class ExamController extends Controller
         }
         $exam->save();
 
-        return redirect('/exams/'.$exam->id)->with('success', 'Edycja pomyślna!');
+        return redirect('/exams/'.$exam->id)->with('message', 'Edycja pomyślna!');
             
     }
 
@@ -112,7 +112,7 @@ class ExamController extends Controller
     public function destroy(Exam $exam)
     {
         $exam->delete();
-        return redirect('/exams')->with('success', 'Usunięto!');
+        return redirect('/')->with('message', 'Usunięto!');
     }
 
 
