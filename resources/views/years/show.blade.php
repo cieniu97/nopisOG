@@ -66,9 +66,9 @@
     </div>
     <div class="row mt-5 text-white">
         <div class="col-12 col-lg-8 mb-5 mb-lg-0">
-            <h2 class="text-white">Lista roczników</h2>
+            <h2 class="text-white">Lista przedmiotów</h2>
             <ul class="list-group mt-2">
-                @forelse ($subjects as $subject)
+                @forelse ($year->subjects as $subject)
                     <li class="list-group-item">
                         <a href="{{route('subjects.show', ['subject' => $subject->id])}}">{{$subject->name}}</a>
                     </li>

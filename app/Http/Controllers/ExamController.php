@@ -48,6 +48,7 @@ class ExamController extends Controller
         //Creating new classroom with validated request data
         $exam = new Exam;
         $exam->subject_id = $validated['subject_id'];
+        $exam->user_id= auth()->user()->id;
         $exam->name = $validated['name'];
         $exam->date = $date;
         $exam->description = $validated['description'];

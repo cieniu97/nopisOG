@@ -15,6 +15,7 @@ class NoteFactory extends Factory
     {
         return [
             'subject_id' => 1,
+            'user_id' => 1,
             'name' => 'Note '.random_int(0,1000),
             'description' => $this->faker->words(20, true),
         ];

@@ -15,6 +15,7 @@ class ExamFactory extends Factory
     {
         return [
             'subject_id' => 1,
+            'user_id' => 1,
             'name' => 'exam '.random_int(0,1000),
             'date' => random_int((time()-1000000),(time()+3000000)),
             'description' => $this->faker->text(100),

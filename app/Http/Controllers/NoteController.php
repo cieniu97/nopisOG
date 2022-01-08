@@ -49,6 +49,7 @@ class NoteController extends Controller
         //Creating new classroom with validated request data
         $note = new Note;
         $note->subject_id = $validated['subject_id'];
+        $note->user_id= auth()->user()->id;
         $note->name = $validated['name'];
         $note->description = $validated['description'];
         $note->save();

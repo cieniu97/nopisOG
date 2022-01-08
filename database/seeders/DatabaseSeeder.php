@@ -61,11 +61,13 @@ class DatabaseSeeder extends Seeder
 
         foreach($exams as $exam){
             $exam->subject_id=$subjects->random()->id;
+            $exam->user_id=$users->random()->id;
             $exam->save();
         }
 
         foreach($notes as $note){
             $note->subject_id=$subjects->random()->id;
+            $note->user_id=$users->random()->id;
             $note->save();
         }
 
