@@ -13,7 +13,13 @@ class FileController extends Controller
 {
     public function downloadFile(File $file){
         
-        return Storage::download($file->path);
+        if(file_exists(storage_path('app/'.$file->path))){
+            return Storage::download($file->path);
+        }
+        else{
+            return back()->with('message', 'Ten plik nie istnieje');
+        }
+        
         
     }
 

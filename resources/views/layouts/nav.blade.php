@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark mb-5 ">
+<nav class="navbar navbar-expand-md navbar-dark mb-5 mb-md-0">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="/layout/logo.png" alt="Nopis.pl" width="120" class="img-fluid">
@@ -41,7 +41,7 @@
                 </li>
 
 
-                @if (auth()->user()->is_admin)
+               
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="contentMenu" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,11 +76,11 @@
                     </ul>
                 </li>
 
-                @endif
+                
 
                 <li class="nav-item">
                     <a href="{{route('create')}}" class="nav-link btn btn-outline-warning">
-                        Dodaj cokolwiek
+                        Dodaj
                     </a>
                 </li>
 

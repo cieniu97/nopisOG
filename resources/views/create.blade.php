@@ -17,8 +17,24 @@ Panel zarządzania
         <form class="row bg-light p-3" id="ultra-add-form" action="/" method="POST" autocomplete="off" onsubmit="validateUltraAddForm(event)">
             @csrf
             <div class="bg-dark text-white p-4 rounded mb-3">
-                <h2>Dodaj cokolwiek</h2>
-                <p>Z poziomu tego formularza możesz dodać cokolwiek, po uzupełnieniu pola, odblokowują się następne. <br> <b>Możesz przestać w każdym momencie</b>, dodane zostaną tylko wypełnione dane</p>
+                <h2>Dodawanie</h2>
+                <p>Z poziomu tego formularza możesz dodać:
+                    <ul>
+                        <li>
+                            Uniwersytet
+                        </li>
+                        <li>
+                            Kierunek
+                        </li>
+                        <li>
+                            Rocznik
+                        </li>
+                        <li>
+                            Przedmiot
+                        </li>
+                    </ul>
+                    Po uzupełnieniu konkretnego pola, jeśli chcesz dodać spokrewnione dane, naciśnij przycisk <b class="text-primary">Dalej</b> a odblokowują się następne. <br> 
+                    Możesz zaprzestać dodawanie w każdym momencie klikając przycisk <b class="text-success">Dodaj</b>. Dodane zostaną tylko wypełnione dane</p>
                 @if ($errors->any())
                 
                     <ul>

@@ -123,6 +123,10 @@ class SubjectController extends Controller
     {
         
         $subject = Subject::withTrashed()->where('id', $id)->firstOrFail();
+        
+        if($subject->year == null){
+            return back()->with('message', 'Nie można przywrócić tego przedmiotu, ponieważ związany z nim rocznik został usunięty lub nie istnieje');
+        }
         $subject->restore();
         return redirect('/subjects')->with('message', 'Przywrócono!');
     }

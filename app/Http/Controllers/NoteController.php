@@ -40,7 +40,7 @@ class NoteController extends Controller
                 'subject_id' => 'required|numeric',
                 'name' => 'required|string',
                 'description' => 'required|string',
-                'files.*' => ['mimes:jpeg,jpg,doc,docx,odt,pdf,txt','max:5000'],
+                'files.*' => ['mimes:jpeg,jpg,doc,docx,odt,pdf,txt,zip,rar','max:5000'],
         ]);
 
         
@@ -123,7 +123,7 @@ class NoteController extends Controller
     public function destroy(Note $note)
     {
         $note->delete();
-        return redirect('/notes')->with('message', 'Usunięto!');
+        return redirect('/')->with('message', 'Usunięto!');
     }
 
     // // Restore trashed (soft deleted) instance of a model

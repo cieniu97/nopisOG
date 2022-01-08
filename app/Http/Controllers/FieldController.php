@@ -96,6 +96,9 @@ class FieldController extends Controller
    {
        
        $field = Field::withTrashed()->where('id', $id)->firstOrFail();
+       if($field->university == null){
+        return back()->with('message', 'Nie można przywrócić tego przedmiotu, ponieważ związany z nim rocznik został usunięty lub nie istnieje');
+    }
        $field->restore();
        return redirect('/fields/trashed')->with('message', 'Przywrócono!');
    }

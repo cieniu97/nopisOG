@@ -7,9 +7,9 @@
 @section('content')
 <div class="container min-vh-100">
     <div class="row">
-        <div class="col-12 col-md-6 mt-5 text-white">
+        <div class="col-12 col-md-6 mt-5 ">
             
-            <h2 >{{$note->name}}</h2>
+            <h2 class="text-white" >{{$note->name}}</h2>
             @if (auth()->user()->is_admin)
             <div class="mt-2">
                 <a href="{{route('notes.edit', ['note' => $note->id])}}" class="btn btn-warning d-inline">Edytuj</a>

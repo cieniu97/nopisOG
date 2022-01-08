@@ -114,6 +114,9 @@ class YearController extends Controller
     {
         
         $year = Year::withTrashed()->where('id', $id)->firstOrFail();
+        if($year->field == null){
+            return back()->with('message', 'Nie można przywrócić tego przedmiotu, ponieważ związany z nim rocznik został usunięty lub nie istnieje');
+        }
         $year->restore();
         return redirect('/years')->with('message', 'Przywrócono!');
     }
