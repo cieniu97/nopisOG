@@ -32,7 +32,7 @@
                   @empty
                     <li class="list-group-item">
                       Nie znalezionego żadnego uniwerystetu.
-                      <a href="{{route('panel')}}">Dodaj</a>
+                      <a href="{{route('create')}}">Dodaj</a>
                     </li>
                   @endforelse
                   
@@ -62,7 +62,7 @@
                   @empty
                     <li class="list-group-item">
                       Nie znalezionego żadnego kierunku.
-                      <a href="{{route('panel')}}">Dodaj</a>
+                      <a href="{{route('create')}}">Dodaj</a>
                     </li>
                   @endforelse
                   
@@ -92,7 +92,7 @@
                   @empty
                     <li class="list-group-item">
                       Nie znalezionego żadnego rocznika.
-                      <a href="{{route('panel')}}">Dodaj</a>
+                      <a href="{{route('create')}}">Dodaj</a>
                     </li>
                   @endforelse
                   
@@ -122,7 +122,36 @@
                   @empty
                     <li class="list-group-item">
                       Nie znalezionego żadnych przedmiotów.
-                      <a href="{{route('panel')}}">Dodaj</a>
+                      <a href="{{route('create')}}">Dodaj</a>
+                    </li>
+                  @endforelse
+                  
+                </ul>
+                
+              </div>
+            </div>
+          </div>
+
+          {{-- Matching teachers  --}}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTeachers">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#matchingTeachers" aria-expanded="true" aria-controls="matchingTeachers">
+                Wykładowcy
+                <span class="position-absolute top-50 start-0 translate-middle badge rounded-pill bg-danger">
+                  {{count($teachers)}}
+                </span>
+              </button>
+            </h2>
+            <div id="matchingTeachers" class="accordion-collapse collapse" aria-labelledby="headingTeachers" data-bs-parent="#matchingResults">
+              <div class="accordion-body">
+                <ul class="list-group">
+                  @forelse ($teachers as $teacher)
+                    <li class="list-group-item">
+                      <a href="/teacher/{{$teacher}}">{{$teacher}}</a>
+                    </li>
+                  @empty
+                    <li class="list-group-item">
+                      Nie znalezionego żadnych wykładowców.
                     </li>
                   @endforelse
                   

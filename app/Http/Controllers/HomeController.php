@@ -76,16 +76,23 @@ class HomeController extends Controller
             'search' => 'required|string',
        ]);
 
+       if(strlen($validated['search'])<3){
+           return back()->with('message','Wprowadź co najmniej 3 znaki');
+       }
+
        $search = $validated['search'];
 
        $universities = University::where('name', 'like', '%'.$search.'%')->get();
        $fields = Field::where('name', 'like', '%'.$search.'%')->get();
        $years = Year::where('name', 'like', '%'.$search.'%')->get();
        $subjects = Subject::where('name', 'like', '%'.$search.'%')->get();
+       $teachers = Subject::where('teacher', 'like', '%'.$search.'%')->pluck('teacher')->unique();
+
+
 
        
 
-       return view('search', ['universities' => $universities, 'fields' => $fields, 'years' => $years, 'subjects' => $subjects, 'search' => $search]);
+       return view('search', ['universities' => $universities, 'fields' => $fields, 'years' => $years, 'subjects' => $subjects, 'search' => $search, 'teachers' => $teachers]);
 
     }
 
@@ -189,6 +196,12 @@ class HomeController extends Controller
         $year=$field->years->where('name',$yeardName)->firstOrFail();
         $subjects=$year->subjects->pluck('name');
         return $subjects;
+    }
+
+    public function teacher($name){
+        $subjects=Subject::where('teacher', $name)->get();
+
+        return view('teacher', ['teacher' => $name, 'subjects' => $subjects]);
     }
 
 

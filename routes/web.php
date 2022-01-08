@@ -33,9 +33,13 @@ Route::post('/', [HomeController::class, 'store'])->name('store');
 
 Route::post('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/create', [HomeController::class, 'create'])->name('create');
+Route::get('/teacher/{name}', [HomeController::class, 'teacher']);
+
 
 Route::get('/files/download/note/{note}', [FileController::class, 'downloadAllNoteFiles']);
 Route::get('/files/download/{file}', [FileController::class, 'downloadFile']);
+
+
 
 Route::get('/get-fields/{universityName}', [HomeController::class, 'getFields']);
 Route::get('/get-years/{universityName}/{fieldName}', [HomeController::class, 'getYears']);
