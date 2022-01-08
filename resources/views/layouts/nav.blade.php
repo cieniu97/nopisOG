@@ -107,14 +107,21 @@
         @guest
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                {{-- Login --}}
-                <li class="nav-item ">
-                    <a class="nav-link" aria-current="page" href="{{route('login')}}">Login</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Login Rejestracja
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a href="/auth/discord/redirect" class="dropdown-item">Discord</a></li>
+                        <li><a class="dropdown-item"  href="{{route('login')}}">Login</a></li>
+                        <li><a class="dropdown-item"  href="{{route('register')}}">Rejestracja</a></li>
+
+                    </ul>
+                    
+                    
+                    
                 </li>
-                {{-- Register --}}
-                <li class="nav-item ">
-                    <a class="nav-link" aria-current="page" href="{{route('register')}}">Rejestracja</a>
-                </li>
+                
             </ul>
         </div>
         @endguest

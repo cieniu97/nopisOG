@@ -12,6 +12,8 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\PanelController;
 use App\Http\Controllers\HomeController;
 
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\SocialiteController;
 
 
 
@@ -27,6 +29,12 @@ use App\Http\Controllers\HomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/auth/discord/redirect', [SocialiteController::class, 'discordRedirect']);
+Route::get('/auth/discord/callback', [SocialiteController::class, 'discordCallback']);
+
+
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/', [HomeController::class, 'store'])->name('store');

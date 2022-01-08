@@ -5,10 +5,12 @@ Home
 
 @section('content')
 <div class="container text-white min-vh-100 mt-3">
+  
+  {{-- Intro for new users --}}
   @if(count($years)==0 && count($subjects)==0)
     <div class="row mb-5 mb-lg-3">
-      <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center"><h1>Witaj {{auth()->user()->name}}!</h1></div>
-      <div class="col-12 col-lg-6">
+      <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center"><h1>Witaj {{auth()->user()->name}}!</h1></div>
+      <div class="col-12 col-lg-5">
         
         <p class="bg-success text-dark p-3 rounded text-white">Jako że jest to najpewniej twój pierwszy raz na tej stronie, pozwól że przedstawimy Ci parę przydatnych informacji, które pomogą Ci w poruszaniu się po stronie</p>
       </div>
@@ -106,6 +108,7 @@ Home
     </div>
   @else
 
+  {{-- Dashboard --}}
   <div class="row">
 
     {{-- Subscription list - Years and subjects --}}

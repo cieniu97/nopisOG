@@ -19,7 +19,12 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+
+            $table->bigInteger('discord_id')->unsigned()->nullable();
+            $table->string('discord_token')->nullable();
+            $table->string('discord_refresh_token')->nullable();
+
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
