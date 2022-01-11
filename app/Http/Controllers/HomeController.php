@@ -131,7 +131,7 @@ class HomeController extends Controller
         $result[0]= $university;
         // Adding field if data is provided
         if($request->has('field') && $validated['field'] != null){
-            $field=Field::where('name', $validated['field'])->first();
+            $field=Field::where('name', $validated['field'])->where('university_id', $university->id)->first();
             if($field==null){
                 $field = new Field;
                 $field->name=$validated['field'];
@@ -143,7 +143,7 @@ class HomeController extends Controller
             // Adding year if data is provided
             if($request->has('year') && $validated['year'] != null && $request->has('year-type') && $validated['year-type'] != null){
                 
-                $year=Year::where('name', $validated['year'])->first();
+                $year=Year::where('name', $validated['year'])->where('field_id', $field->id)->first();
                 if($year==null){
                     $year = new Year;
                     $year->name=$validated['year'];
@@ -157,7 +157,7 @@ class HomeController extends Controller
                 // Adding subject if data is provided
                 if($request->has('subject') && $validated['subject'] != null && $request->has('semester') && $validated['semester'] != null && $request->has('teacher') && $validated['teacher'] != null){
                 
-                    $subject=Subject::where('name', $validated['subject'])->first();
+                    $subject=Subject::where('name', $validated['subject'])->where('year_id', $year->id)->first();
                     if($subject==null){
                         $subject = new Subject;
                         $subject->name=$validated['subject'];

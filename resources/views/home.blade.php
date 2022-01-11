@@ -22,7 +22,7 @@ Home
         <div class="col-11 col-md-8">
           <h5 class="text-success">Baza informacji</h5>
           <p>
-             Nopis.pl posiada bazdę danych zawierającą polskie uniwersytety. 
+             Nopis.pl posiada bazę danych zawierającą polskie uniwersytety. 
             <a href="{{route('universities.index')}}">Uniwersytety</a> mają przypisane 
             <a href="{{route('fields.index')}}">kierunki</a>, kierunki <a href="{{route('years.index')}}">roczniki</a> a roczniki konkretne <a href="{{route('subjects.index')}}">przedmioty</a>. 
             <br>
@@ -40,7 +40,7 @@ Home
           <h5 class="text-success">Subskrypcje</h5>
           <p>
              
-            Głównyą funkcją serwisu która może Cię zainteresować jest system subskrypcji.
+            Główną funkcją serwisu która może Cię zainteresować jest system subskrypcji.
             Ale jak to działa?
             <ul>
               <li>
@@ -53,7 +53,7 @@ Home
                 To wszystko!
               </li>
               <li>
-                Wszyskie bierzące materiały i zbliżające się egzaminy wyświetlą się tutaj
+                Wszyskie bieżące materiały i zbliżające się egzaminy wyświetlą się tutaj
               </li>
             </ul>
             <hr>

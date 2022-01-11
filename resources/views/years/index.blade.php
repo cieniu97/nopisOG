@@ -21,6 +21,8 @@ Roczniki
                         <th scope="col">Universytet</th>
                         <th scope="col">Kierunek</th>
                         <th scope="col" class="bg-success">Rocznik</th>
+                        <th scope="col" class="bg-success">Typ</th>
+
 
 
                         
@@ -34,6 +36,8 @@ Roczniki
                         <td> <a href="{{route('universities.show', ['university' => $year->field->university->id])}}">{{$year->field->university->name}}</a></td>
                         <td> <a href="{{route('fields.show', ['field' => $year->field->id])}}">{{$year->field->name}}</a></td>
                         <td> <a href="{{route('years.show', ['year' => $year->id])}}">{{$year->name}}</a></td>
+                        <td> <a href="{{route('years.show', ['year' => $year->id])}}">{{$year->type}}</a></td>
+
 
                     </tr>
                     
