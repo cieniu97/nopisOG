@@ -94,7 +94,7 @@ function appendResults(target, data){
 
         }
         else if(target=="subject-list"){
-            option.append(data[i]['name']);
+            option.append(data[i]['name'] + ' - ' + data[i]['semester'] + ' - ' + data[i]['teacher']);
             option.value = "SecretToChange;" + data[i]['name'] + ";" + data[i]['semester'] + ";" + data[i]['teacher'];
         }
         else{
