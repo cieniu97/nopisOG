@@ -143,7 +143,7 @@ class HomeController extends Controller
             // Adding year if data is provided
             if($request->has('year') && $validated['year'] != null && $request->has('year-type') && $validated['year-type'] != null){
                 
-                $year=Year::where('name', $validated['year'])->where('field_id', $field->id)->first();
+                $year=Year::where('name', $validated['year'])->where('type', $validated['year-type'])->where('field_id', $field->id)->first();
                 if($year==null){
                     $year = new Year;
                     $year->name=$validated['year'];

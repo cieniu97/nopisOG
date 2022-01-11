@@ -36,9 +36,7 @@ class FieldController extends Controller
    // Validate data from creation form and store instance into database
    public function store(Request $request)
    {
-        if(!auth()->user()->is_admin){
-            return back()->with('message', 'Nie posiadasz uprawnień!');
-        }
+
        //Validating request from form
        $validated = $request->validate([
             'university_id' => 'required|numeric',

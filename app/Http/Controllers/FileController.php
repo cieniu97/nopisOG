@@ -17,7 +17,7 @@ class FileController extends Controller
             return Storage::download($file->path);
         }
         else{
-            return back()->with('message', 'Ten plik nie istnieje');
+            return back()->with('message', 'Ten plik nie istnieje, lub został usunięty');
         }
         
         
@@ -39,6 +39,9 @@ class FileController extends Controller
                 }
                 $zip->close();
             }
+        }
+        else{
+            return back()->with('message', 'Pliki nie istnieją, lub zostały usunięte');
         }
         
         if(file_exists(storage_path($zipName))){
