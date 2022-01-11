@@ -157,7 +157,7 @@ class HomeController extends Controller
                 // Adding subject if data is provided
                 if($request->has('subject') && $validated['subject'] != null && $request->has('semester') && $validated['semester'] != null && $request->has('teacher') && $validated['teacher'] != null){
                 
-                    $subject=Subject::where('name', $validated['subject'])->where('year_id', $year->id)->first();
+                    $subject=Subject::where('name', $validated['subject'])->where('semester', $validated['semester'])->where('teacher', $validated['teacher'])->where('year_id', $year->id)->first();
                     if($subject==null){
                         $subject = new Subject;
                         $subject->name=$validated['subject'];
@@ -177,24 +177,42 @@ class HomeController extends Controller
         return back()->with(['message' => 'Dodano!', 'added' => $result]);
     }
 
-    public function getFields($universityName){
-        $university=University::where('name', $universityName)->firstOrFail();
-        $fields=$university->fields->pluck('name');
+    public function getFields(Request $request){
+
+        //Validating request from form
+        $validated = $request->validate([
+            'university' => 'required|string',
+        ]);
+        $university=University::where('name', $validated['university'])->firstOrFail();
+        $fields=$university->fields;
         return $fields;
     }
 
-    public function getYears($universityName, $fieldName){
-        $university=University::where('name', $universityName)->firstOrFail();
-        $field=$university->fields->where('name',$fieldName)->firstOrFail();
-        $years=$field->years->pluck('name');
+    public function getYears(Request $request){
+        //Validating request from form
+        $validated = $request->validate([
+            'university' => 'required|string',
+            'field' => 'required|string',
+        ]);
+        $university=University::where('name', $validated['university'])->firstOrFail();
+        $field=$university->fields->where('name', $validated['field'])->firstOrFail();
+        $years=$field->years;
         return $years;
     }
 
-    public function getSubjects($universityName, $fieldName, $yearName){
-        $university=University::where('name', $universityName)->firstOrFail();
-        $field=$university->fields->where('name',$fieldName)->firstOrFail();
-        $year=$field->years->where('name',$yeardName)->firstOrFail();
-        $subjects=$year->subjects->pluck('name');
+    public function getSubjects(Request $request){
+
+        //Validating request from form
+        $validated = $request->validate([
+            'university' => 'required|string',
+            'field' => 'required|string',
+            'year' => 'required|string',
+            'yeartype' => 'required|string',
+        ]);
+        $university=University::where('name', $validated['university'])->firstOrFail();
+        $field=$university->fields->where('name', $validated['field'])->firstOrFail();
+        $year=$field->years->where('name', $validated['year'])->where('type', $validated['yeartype'])->firstOrFail();
+        $subjects=$year->subjects;
         return $subjects;
     }
 

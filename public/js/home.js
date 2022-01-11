@@ -42,9 +42,33 @@ window.onload = function onStart() {
     if( yearDone != null){
         yearDone.addEventListener("click", yearConfirmed);
     }
-
     
+    var yearInput = document.getElementById('year-input');
+    yearInput.addEventListener("input", yearToChange);
+
+    var subjectInput = document.getElementById('subject-input');
+    subjectInput.addEventListener("input", subjectToChange);
  
+}
+
+function yearToChange(){
+    let inputValue = document.getElementById('year-input').value;
+    if(inputValue.includes("SecretToChange")){
+        let year = inputValue.split(';');
+        document.getElementById('year-input').value = year[1];
+        document.getElementById('year-type-input').value = year[2];
+    }
+}
+
+function subjectToChange(){
+    let inputValue = document.getElementById('subject-input').value;
+    if(inputValue.includes("SecretToChange")){
+        let subject = inputValue.split(';');
+        document.getElementById('subject-input').value = subject[1];
+        document.getElementById('semester-input').value = subject[2];
+        document.getElementById('teacher-input').value = subject[3];
+
+    }
 }
 
 // Requesting data from API via ajax
@@ -63,8 +87,21 @@ function appendResults(target, data){
     var targetList = document.getElementById(target);
     for(var i=0; i<data.length; i++){
         let option = document.createElement('option');
-        option.append(data[i]);
+        if(target=="year-list"){
+
+            option.append(data[i]['name'] + " - " + data[i]['type']);
+            option.value = "SecretToChange;" + data[i]['name'] + ';' + (data[i]['type']);
+
+        }
+        else if(target=="subject-list"){
+            option.append(data[i]['name']);
+            option.value = "SecretToChange;" + data[i]['name'] + ";" + data[i]['semester'] + ";" + data[i]['teacher'];
+        }
+        else{
+            option.append(data[i]['name']);
+        }
         targetList.append(option);
+        
     }
 }
 
@@ -80,7 +117,7 @@ function universityConfirmed(){
         document.getElementById('field-done').classList.remove("disabled");
 
         //Requesting data from database via AJAX and puting them into according datalist
-        var url = '/get-fields/' + document.getElementById('university-input').value;
+        var url = '/get-fields?university=' + document.getElementById('university-input').value;
         getData(url, 'field-list');
     }
     else{
@@ -109,7 +146,7 @@ function fieldConfirmed(){
         document.getElementById('year-done').classList.remove("disabled");
 
         //Requesting data from database via AJAX and puting them into according datalist
-        var url = '/get-years/' + document.getElementById('university-input').value + '/' + document.getElementById('field-input').value;
+        var url = '/get-years?university=' + document.getElementById('university-input').value + '&field=' + document.getElementById('field-input').value;
         getData(url, 'year-list');
     }
     else{
@@ -139,7 +176,7 @@ function yearConfirmed(){
         document.getElementById('teacher-input').disabled = false;
 
         //Requesting data from database via AJAX and puting them into according datalist
-        var url = '/get-subjects/' + document.getElementById('university-input').value + '/' + document.getElementById('field-input').value + '/' + document.getElementById('year-input').value;
+        var url = '/get-subjects?university=' + document.getElementById('university-input').value + '&field=' + document.getElementById('field-input').value + '&year=' + document.getElementById('year-input').value + '&yeartype=' + document.getElementById('year-type-input').value;
         getData(url, 'subject-list');
         }
         else{

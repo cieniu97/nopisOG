@@ -119,7 +119,7 @@ Panel zarządzania
             {{-- Subject --}}
             <div class="col-10 mt-3">
                 <label for="subject" class="form-label">Przedmiot</label>
-                <input type="text" class="form-control" id="subject-input" name="subject"  disabled readonly>
+                <input type="text" class="form-control" id="subject-input" name="subject" list="subject-list"  disabled readonly>
                 <datalist id="subject-list"></datalist>
             </div>
 

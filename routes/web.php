@@ -48,9 +48,9 @@ Route::middleware(['auth'])->group(function () {
     
     
     
-    Route::get('/get-fields/{universityName}', [HomeController::class, 'getFields']);
-    Route::get('/get-years/{universityName}/{fieldName}', [HomeController::class, 'getYears']);
-    Route::get('/get-subjects/{universityName}/{fieldName}/{yearName}', [HomeController::class, 'getSubjects']);
+    Route::get('/get-fields', [HomeController::class, 'getFields']);
+    Route::get('/get-years', [HomeController::class, 'getYears']);
+    Route::get('/get-subjects', [HomeController::class, 'getSubjects']);
     
     
     Route::get('/universities/trashed', [UniversityController::class, 'trashed'])->name('universities.trashed');
