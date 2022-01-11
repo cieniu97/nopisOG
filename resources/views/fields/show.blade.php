@@ -58,7 +58,7 @@
             <ul class="list-group mt-2">
                 @forelse ($years as $year)
                     <li class="list-group-item">
-                        <a href="{{route('years.show', ['year' => $year->id])}}">{{$year->name}}</a>
+                        <a href="{{route('years.show', ['year' => $year->id])}}">{{$year->name}} - {{$year->type}}</a>
                     </li>
                 @empty
                     <li class="list-group-item"> Ten kierunek nie posiada jeszcze przypisanych roczników</li>
