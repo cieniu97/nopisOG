@@ -33,6 +33,10 @@ Route::get('/auth/discord/redirect', [SocialiteController::class, 'discordRedire
 Route::get('/auth/discord/callback', [SocialiteController::class, 'discordCallback']);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tos', function(){
+    return view('tos');
+});
+
 
 
 Route::middleware(['auth'])->group(function () {

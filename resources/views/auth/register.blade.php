@@ -14,7 +14,7 @@
 
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
+                <x-label for="name" :value="__('Login')" />
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
@@ -28,7 +28,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label for="password" :value="__('Hasło')" />
 
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
@@ -38,22 +38,28 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-label for="password_confirmation" :value="__('Potwierdź hasło')" />
 
                 <x-input id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
                                 name="password_confirmation" required />
             </div>
+            <div class="flex flex-row items-center justify-start mt-4">
+                <input type="checkbox" name="tos">
+                <a class="underline text-sm pl-3 text-gray-600 hover:text-gray-900" href="/tos">Akceptuję i znam treść regulaminu</a>
+            </div>
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    Masz już konto?
                 </a>
 
                 <x-button class="ml-4">
-                    {{ __('Register') }}
+                    Zarejestruj
                 </x-button>
+                
             </div>
+            
         </form>
     </x-auth-card>
 </x-guest-layout>
