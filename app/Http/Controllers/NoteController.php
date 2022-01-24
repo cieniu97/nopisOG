@@ -40,7 +40,7 @@ class NoteController extends Controller
                 'subject_id' => 'required|numeric',
                 'name' => 'required|string',
                 'description' => 'required|string',
-                'files.*' => ['mimes:jpeg,jpg,doc,docx,odt,pdf,txt,zip,rar','max:5000'],
+                'files.*' => ['mimes:jpeg,jpg,doc,docx,odt,pdf,txt,zip,rar,ptt,pttx','max:30000'],
         ]);
 
         

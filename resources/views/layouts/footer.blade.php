@@ -9,8 +9,9 @@
     <div class="info" >
       <h2 style="color:rgb(92, 199, 153)">Kontakt</h2>
       Wszystkie uwagi, problemy techniczne proszę zgłaszać na e-mail <br> <b style="color:rgb(232, 113, 113);text-decoration: underline;">nopis.problem@gmail.com</b>
-
+      <h2 ><a href="/tos" style="color:rgb(92, 199, 153)">Regulamin</a></h2>
     </div>
+    
   </div>
   
 </div>

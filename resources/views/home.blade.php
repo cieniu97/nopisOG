@@ -69,7 +69,7 @@ Home
           <h5 class="text-success">Twój wkład</h5>
           <p>
             Z poziomu podglądu przedmiotu możesz dodać materiały i egzaminy z nim związane.
-            Do materiałów możesz załączyć pliki w formatach: jpeg, jpg, doc, docx, odt, pdf, txt <br>
+            Do materiałów możesz załączyć pliki w formatach: jpeg, jpg, doc, docx, odt, pdf, txt, ptt, pttx <br>
             Jeśli chcesz zamieścić niestandardowe pliki po prostu umieść je w archiwum RAR lub ZIP
           <hr>
           </p>
